@@ -192,6 +192,7 @@ public class Contract extends BasePo{
 
     public BigDecimal getTotalMoney() {
         return totalMoney;
+//        pp
     }
 
     public void setTotalMoney(BigDecimal totalMoney) {
