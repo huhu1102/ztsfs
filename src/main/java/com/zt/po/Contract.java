@@ -103,6 +103,7 @@ public class Contract extends BasePo{
 
     public String getContractName() {
         return contractName;
+        //test
     }
 
     public void setContractName(String contractName) {
