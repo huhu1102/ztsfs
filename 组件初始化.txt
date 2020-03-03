@@ -1,0 +1,42 @@
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('1', NULL, NULL, '所有', NULL, NULL, '/',  NULL);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`, `pid`)
+                 VALUES ('2', 'Home', 'el-icon-menu', '部门管理', 1, '/home', '/', 1);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`, `pid`)
+                 VALUES ('3', 'Home', 'el-icon-menu', '综合管理', 1, '/home', '/', 1);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,`pid`)
+                 VALUES ('4', 'Emp', NULL, '员工', 2, '/emp/info', '/emp/**',  2);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('5', 'Department', NULL, '部门', 2, '/emp/department', '/department/**', 2);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('6', 'Position', NULL, '职位', 2, '/emp/position', '/position/**', 2);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('7', 'Position', NULL, '职位', 2, '/emp/position', '/position/**',  2);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('8', 'Car', NULL, '车辆信息', 3, '/car/infor', '/car/**', 3);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('9', 'CarRequest', NULL, '用车申请', 3, '/car/askRequest', '/car/**', 3);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('10', 'CarRecord', NULL, '行车记录', 3, '/car/carRecord', '/car/**', 3);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`, `pid`)
+                 VALUES ('11', 'CarRepair', NULL, '车辆维护', 3, '/car/carRepair', '/car/**',  3);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`,  `pid`)
+                 VALUES ('12', 'Product', NULL, '产品管理', 3, '/product/infor', '/product/**',  3);
+INSERT INTO `zt_menu` (`id`, `component`, `iconCls`, `name`, `parentId`, `path`, `url`, `pid`)
+                 VALUES ('13', 'ProductStep', NULL, '工序步骤', 3, '/product/workStep', '/product/**', 3);
+
+
+INSERT INTO `zt_menumate` ( `keepAlive`, `requireAuth`) VALUES (NULL, NULL);
+INSERT INTO `zt_menumate` (`keepAlive`, `requireAuth`) VALUES (0, TRUE);
+
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('4', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('5', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('6', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('7', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('8', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('9', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('10', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('11', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('12', '1');
+INSERT INTO `menu_sysrole` (`menuId`, `sysroleId`) VALUES ('13', '1');
+
