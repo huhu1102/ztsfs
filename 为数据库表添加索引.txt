@@ -1,0 +1,78 @@
+ALTER TABLE zt_vehicleinfo ADD INDEX (licensePlateNumber);
+
+
+
+ALTER TABLE zt_vehicleinfo ADD INDEX (licensePlateNumber);
+ALTER TABLE zt_vehicleinfo  ADD UNIQUE ( licensePlateNumber);
+ALTER TABLE zt_vehicleinfo DROP INDEX licensePlateNumber;
+ALTER TABLE zt_vehiclemaintenance ADD UNIQUE ( vech_Id);
+ALTER TABLE zt_vehiclemaintenance DROP INDEX vech_Id_2;
+ALTER TABLE zt_vehicleinfo  ADD UNIQUE ( STATUS);
+ALTER TABLE zt_vehicleinfo DROP INDEX STATUS;
+ALTER TABLE zt_vehicleinfo ADD INDEX (STATUS);
+ALTER TABLE zt_vehicleinfo ADD INDEX (buyingTime);
+ALTER TABLE zt_vehiclemaintenance ADD INDEX ( bookingMileage);
+
+ALTER TABLE zt_vehiclerecord ADD INDEX ( counts);
+
+ALTER TABLE zt_asked ADD INDEX (empId);
+
+ALTER TABLE zt_client ADD UNIQUE (phone);
+ALTER TABLE zt_client ADD INDEX (name);
+
+ALTER TABLE zt_client ADD INDEX (address);
+ALTER TABLE zt_client ADD INDEX (STATUS);
+ALTER TABLE zt_contract ADD UNIQUE (contractNumber);
+
+ALTER TABLE zt_contract ADD INDEX (state);
+
+ALTER TABLE zt_contract ADD INDEX (ctNumber);
+
+ALTER TABLE zt_department  ADD UNIQUE (NAME);
+ALTER TABLE zt_department  ADD UNIQUE (deNumber);
+ALTER TABLE zt_deviceinfo  ADD INDEX (deviceName);
+
+ALTER TABLE zt_deviceinfo  ADD INDEX (deviceStatus);
+ALTER TABLE zt_employee  ADD INDEX (NAME);
+ALTER TABLE zt_employee  ADD INDEX (NAME,address);
+ALTER TABLE  zt_employee    ADD UNIQUE ( phone);
+ALTER TABLE zt_eqmt  ADD INDEX ( maintenance);
+
+ALTER TABLE zt_eqmt  ADD INDEX (repairman);
+ALTER TABLE zt_eqmt  ADD INDEX (repairResult);
+
+
+ALTER TABLE zt_inform ADD INDEX (SUBJECT);
+ALTER TABLE zt_meeting ADD INDEX (SUBJECT);
+
+ALTER TABLE zt_menu  ADD UNIQUE (createDate);
+
+ALTER TABLE zt_menu ADD INDEX (component);
+ALTER TABLE zt_middleproduct  ADD INDEX (marking);
+
+
+ALTER TABLE zt_middleproduct  ADD INDEX (manufacturer);
+
+
+ALTER TABLE zt_inform ADD INDEX (SUBJECT);
+ALTER TABLE zt_meeting ADD INDEX (SUBJECT);
+
+ALTER TABLE zt_menu  ADD UNIQUE (createDate);
+
+ALTER TABLE zt_menu ADD INDEX (component);
+ALTER TABLE zt_middleproduct  ADD INDEX (marking);
+
+ALTER TABLE zt_middleproduct  ADD INDEX (manufacturer);
+ALTER TABLE zt_position  ADD INDEX (NAME);
+
+
+ALTER TABLE zt_tender ADD INDEX ( STATUS);
+
+ALTER TABLE zt_products ADD INDEX (producteName);
+
+ALTER TABLE zt_productprocess ADD INDEX (stepNumber);
+ALTER TABLE zt_rolese ADD INDEX ( NAME);
+ALTER TABLE zt_sysrole ADD INDEX ( NAME);
+ALTER TABLE zt_tender ADD UNIQUE ( number);
+ALTER TABLE zt_tender ADD INDEX ( STATUS);
+ALTER TABLE zt_workstep  ADD INDEX ( workstepName);
