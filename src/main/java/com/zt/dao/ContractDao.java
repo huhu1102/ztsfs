@@ -51,7 +51,9 @@ public interface ContractDao extends JpaRepository<Contract,Long> {
                               @Param("contractStatus")Integer status,
                               Pageable pageable);
 
+    @Query("select c from Contract c where c.enabled=true and c.id=?1")
     Contract findById(long id);
 
+    //查找自定义最大的编号
 
 }

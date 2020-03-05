@@ -72,8 +72,6 @@ public class SalesOrder extends BasePo {
 	private Integer orderStatus;
 	@Column(columnDefinition ="varchar(255)  COMMENT '税收.'" )
 	private  Float  tax;
-
-
 	
 	//关联订单详情
 	@OneToMany(mappedBy = "salesOrder",cascade = CascadeType.ALL)

@@ -3,7 +3,6 @@ package com.zt.po;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="zt_contract")
@@ -41,11 +40,33 @@ public class Contract extends BasePo{
     private long cliId;
     //前台展示使用；
     private String clientArr;
+
+    //回款金额
+    private BigDecimal backMoney;
+
+    //回款时间
+    @Column(columnDefinition ="datetime COMMENT '截止时间'" )
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date backMoneyEndDate;
+
+
     //质保金 e.g 5%
-    private String qualityDeposit;
+    private float qualityDeposit;
+
+    /** 质保金状态
+     * 1.已支付
+     * 2.未支付
+     */
+
+    private Integer  qualityDepositStatus;
+
+    //质保金结束日期
+    @Column(columnDefinition ="datetime COMMENT '截止时间'" )
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date qualityDepositEndDate;
 
     //增值税 e.g 16%
-    private String tax;
+    private float tax;
 
     //合同类型
     @Column(columnDefinition ="varchar(255)  COMMENT '合同类型.'" )
@@ -77,6 +98,7 @@ public class Contract extends BasePo{
      * 3.废弃
      */
     private int contractStatus;
+
     //备注
     private String notes;
     //是否可用
@@ -99,6 +121,38 @@ public class Contract extends BasePo{
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public BigDecimal getBackMoney() {
+        return backMoney;
+    }
+
+    public void setBackMoney(BigDecimal backMoney) {
+        this.backMoney = backMoney;
+    }
+
+    public Date getBackMoneyEndDate() {
+        return backMoneyEndDate;
+    }
+
+    public void setBackMoneyEndDate(Date backMoneyEndDate) {
+        this.backMoneyEndDate = backMoneyEndDate;
+    }
+
+    public Integer getQualityDepositStatus() {
+        return qualityDepositStatus;
+    }
+
+    public void setQualityDepositStatus(Integer qualityDepositStatus) {
+        this.qualityDepositStatus = qualityDepositStatus;
+    }
+
+    public Date getQualityDepositEndDate() {
+        return qualityDepositEndDate;
+    }
+
+    public void setQualityDepositEndDate(Date qualityDepositEndDate) {
+        this.qualityDepositEndDate = qualityDepositEndDate;
     }
 
     public String getContractName() {
@@ -157,19 +211,19 @@ public class Contract extends BasePo{
         this.clientArr = clientArr;
     }
 
-    public String getQualityDeposit() {
+    public float getQualityDeposit() {
         return qualityDeposit;
     }
 
-    public void setQualityDeposit(String qualityDeposit) {
+    public void setQualityDeposit(float qualityDeposit) {
         this.qualityDeposit = qualityDeposit;
     }
 
-    public String getTax() {
+    public float getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(float tax) {
         this.tax = tax;
     }
 
