@@ -3,6 +3,7 @@ package com.zt.serviceImp;
 import com.zt.common.Message;
 import com.zt.common.MessageUtil;
 import com.zt.common.Utils;
+
 import com.zt.dao.ClientDao;
 import com.zt.dao.ContractDao;
 import com.zt.dao.EmployeeDao;
@@ -17,11 +18,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import java.util.Map;
 
 @Service
@@ -39,6 +42,7 @@ public class ContractServiceImp implements ContractService {
     ClientDao clientDao;
     @Autowired
     EmployeeDao employeeDao;
+
 
     /**
      *
@@ -73,6 +77,7 @@ public class ContractServiceImp implements ContractService {
         signDateEnd = stringStringMap.get("7");
 
         Page<Contract> pages = contractDao.findSearch(contractName, clientName, empName, createDateStart, createDateEnd, startDateStart, startDateEnd, endDateStart, endDateEnd,signDateStart,signDateEnd, status, pageable);
+
         if (pages.getContent()!= null) {
             ro.setData(pages.getContent());
             ro.setTotal(pages.getTotalElements());

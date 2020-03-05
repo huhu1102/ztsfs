@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+
 @Entity
 @Table(name="zt_contract")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -67,6 +68,7 @@ public class Contract extends BasePo{
 
     //增值税 e.g 16%
     private float tax;
+
 
     //合同类型
     @Column(columnDefinition ="varchar(255)  COMMENT '合同类型.'" )
@@ -157,6 +159,7 @@ public class Contract extends BasePo{
 
     public String getContractName() {
         return contractName;
+
     }
 
     public void setContractName(String contractName) {
@@ -211,6 +214,7 @@ public class Contract extends BasePo{
         this.clientArr = clientArr;
     }
 
+
     public float getQualityDeposit() {
         return qualityDeposit;
     }
@@ -224,6 +228,7 @@ public class Contract extends BasePo{
     }
 
     public void setTax(float tax) {
+
         this.tax = tax;
     }
 

@@ -1,7 +1,7 @@
 package com.zt.model;
 
 import com.zt.po.BasePo;
-import com.zt.po.Contract;
+
 import com.zt.po.SalesOrder;
 
 import java.math.BigDecimal;
@@ -23,10 +23,7 @@ public class SalesOrderModel extends BasePo {
     private long id;
     //合同名称
     private String contractName;
-    //合同编号
-    private String contractNumber;
-    //质保金
-    private float qualityDeposit;
+
     //展示使用
     private String clientArr;
     //负责人Id
@@ -37,7 +34,7 @@ public class SalesOrderModel extends BasePo {
     //附件url
     private String imageUrl;
     private Boolean hasContract;
-    //质保金
+
     private  BigDecimal totalMoney;
     //客户Id
     private Long cliId;
@@ -57,25 +54,10 @@ public class SalesOrderModel extends BasePo {
         this.contractName = contractName;
     }
 
-    public String getContractNumber() {
-        return contractNumber;
-    }
-
-    public void setContractNumber(String contractNumber) {
-        this.contractNumber = contractNumber;
-    }
-
     public Long getCliId() {
         return cliId;
     }
 
-    public float getQualityDeposit() {
-        return qualityDeposit;
-    }
-
-    public void setQualityDeposit(float qualityDeposit) {
-        this.qualityDeposit = qualityDeposit;
-    }
 
     public String getUploadName() {
         return uploadName;
@@ -129,6 +111,29 @@ public class SalesOrderModel extends BasePo {
         this.clientArr = clientArr;
     }
 
+
+    public SalesOrder v2p(SalesOrderModel mo) {
+        SalesOrder c = new SalesOrder();
+        if (mo.getId() != 0) {
+            c.setId(mo.getId());
+        }
+        c.setTotalMoney(mo.getTotalMoney());
+        c.setCliId(mo.getCliId());
+        c.setEmpId(mo.getEmpId());
+        c.setContractName(mo.getContractName());
+		c.setClientArr(mo.getClientArr());
+		c.setTax(mo.getTax());
+		if(null!=mo.getContractName()){
+		c.setContractName(mo.getContractName());
+        }
+//		c.setCon
+//        c.setCreateDate(new Date());
+        c.setNotes(mo.getNotes());
+        c.setHasContract(mo.getHasContract());
+        c.setEnabled(true);
+        return c;
+    }
+
     public Boolean getHasContract() {
         return hasContract;
     }
@@ -159,34 +164,6 @@ public class SalesOrderModel extends BasePo {
 
     public void setId(long id) {
         this.id = id;
-    }
-    public SalesOrder v2p(SalesOrderModel mo) {
-        SalesOrder s = new SalesOrder();
-        Contract c = new Contract();
-        if (mo.getId() != 0) {
-            s.setId(mo.getId());
-        }
-        s.setTotalMoney(mo.getTotalMoney());
-        s.setCliId(mo.getCliId());
-        s.setEmpId(mo.getEmpId());
-        s.setClientArr(mo.getClientArr());
-        s.setTax(mo.getTax());
-        s.setCreateDate(new Date());
-        s.setNotes(mo.getNotes());
-        s.setContractName(mo.getContractName());
-        s.setTotalMoney(mo.getTotalMoney());
-        if(mo.getHasContract()){
-            //新建合同
-            c.setContractNumber(mo.getContractNumber());
-            c.setContractName(mo.getContractName());
-            c.setQualityDeposit(mo.getQualityDeposit());
-
-        }else{
-            c.setContractNumber(mo.getContractNumber());
-        }
-        s.setHasContract(mo.getHasContract());
-        s.setEnabled(true);
-        return s;
     }
 
 }

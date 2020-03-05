@@ -104,6 +104,7 @@ public class ProductManageDetailsServiceImp implements ProductManageDetailsServi
         Map<String, String> stringStringMap = Utils.updateTime(start, end);
         start = stringStringMap.get("0");
         end = stringStringMap.get("1");
+
         Page<ProductManageDetails> pages = productManageDetailsDao.findByMangeId(manageId,start,end,pageable);
         if (pages != null) {
             ro.setTotal(pages.getTotalElements());

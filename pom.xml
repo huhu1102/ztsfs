@@ -30,6 +30,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
                  <exclusion>
+
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
@@ -55,10 +56,12 @@
 			<artifactId>spring-data-rest-hal-browser</artifactId>
 		</dependency>
 		<dependency>
+
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -210,5 +213,6 @@
 		</resources>
      <finalName>ztsfs</finalName>
 	</build>
+
 
 </project>

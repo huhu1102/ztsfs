@@ -118,6 +118,7 @@ public class ContractModel extends BasePo {
     }
 
     public void setTax(float tax) {
+
         this.tax = tax;
     }
 

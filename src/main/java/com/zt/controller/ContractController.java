@@ -24,6 +24,7 @@ public class ContractController {
     public ResultPage<Contract> findbypage(String contractName,String clientName,String empName,String createDateStart,String createDateEnd,String startDateStart,String startDateEnd,String endDateStart,String endDateEnd,String signDateStart,
                                            String signDateEnd ,Integer status,int page, int size) {
         return contractService.findSearch(contractName,clientName,empName,createDateStart,createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,signDateStart, signDateEnd ,status, page,size);
+
     }
     /*
      * 新增

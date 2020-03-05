@@ -46,6 +46,7 @@ public interface ContractDao extends JpaRepository<Contract,Long> {
                               @Param("startDateEnd")String startDateEnd,
                               @Param("endDateStart")String endDateStart,
                               @Param("endDateEnd")String endDateEnd,
+
                               @Param("signDateStart")String signDateStart,
                               @Param("signDateEnd")String signDateEnd,
                               @Param("contractStatus")Integer status,
@@ -55,5 +56,6 @@ public interface ContractDao extends JpaRepository<Contract,Long> {
     Contract findById(long id);
 
     //查找自定义最大的编号
+
 
 }
