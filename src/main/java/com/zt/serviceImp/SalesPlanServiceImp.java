@@ -60,6 +60,7 @@ public class SalesPlanServiceImp implements SalesPlanService {
         public ResultPage<Object> find(String clientName, String productName, String empName, String start, String end, Integer status, int page, int size) throws BusinessRuntimeException {
             ResultPage<Object> ro = new ResultPage<>();
             Pageable pageable = PageRequest.of(page - 1, size);
+
             Page<Object> pages = salesPlanDao.find(clientName, productName, empName, start, end, status, pageable);
             if (pages != null) {
                 ro.setData(pages.getContent());

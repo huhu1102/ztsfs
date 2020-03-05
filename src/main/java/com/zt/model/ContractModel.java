@@ -28,9 +28,9 @@ public class ContractModel extends BasePo {
     //前台展示使用；
     private String clientArr;
     //质保金 e.g 5%
-    private String qualityDeposit;
+    private float qualityDeposit;
     //增值税 e.g 16%
-    private String tax;
+    private float tax;
     //合同类型
     private String type;
     //总金额
@@ -105,19 +105,20 @@ public class ContractModel extends BasePo {
         this.clientArr = clientArr;
     }
 
-    public String getQualityDeposit() {
+    public float getQualityDeposit() {
         return qualityDeposit;
     }
 
-    public void setQualityDeposit(String qualityDeposit) {
+    public void setQualityDeposit(float qualityDeposit) {
         this.qualityDeposit = qualityDeposit;
     }
 
-    public String getTax() {
+    public float getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(float tax) {
+
         this.tax = tax;
     }
 

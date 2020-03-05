@@ -39,7 +39,6 @@ public interface SalesOrderDao extends JpaRepository<SalesOrder, Long> {
                     "and if(:status !='',o.orderStatus =:status ,1=1)",
             nativeQuery = true)
     Page<SalesOrder> findSearch(@Param("clientName") String clientName,
-
                                 @Param("name") String empName,
                                 @Param("start") String start,
                                 @Param("end") String end,

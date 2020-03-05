@@ -157,7 +157,8 @@ public class Utils {
 		Map<String,String>map=new HashMap<>();
 		for (int i = 0; i < days.length; i++) {
 			 if(!(days[i].equals(""))){
-				 map.put(i+"",parseTimeZone(days[i]));
+				 map.put(i+"",Utils.parseTimeZone(days[i]));
+
 			 }
 		}
 		return map;

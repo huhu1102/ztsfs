@@ -1,6 +1,7 @@
 package com.zt.model;
 
 import com.zt.po.BasePo;
+
 import com.zt.po.SalesOrder;
 
 import java.math.BigDecimal;
@@ -33,6 +34,7 @@ public class SalesOrderModel extends BasePo {
     //附件url
     private String imageUrl;
     private Boolean hasContract;
+
     private  BigDecimal totalMoney;
     //客户Id
     private Long cliId;
@@ -55,6 +57,7 @@ public class SalesOrderModel extends BasePo {
     public Long getCliId() {
         return cliId;
     }
+
 
     public String getUploadName() {
         return uploadName;
@@ -107,6 +110,7 @@ public class SalesOrderModel extends BasePo {
     public void setClientArr(String clientArr) {
         this.clientArr = clientArr;
     }
+
 
     public SalesOrder v2p(SalesOrderModel mo) {
         SalesOrder c = new SalesOrder();
@@ -161,4 +165,5 @@ public class SalesOrderModel extends BasePo {
     public void setId(long id) {
         this.id = id;
     }
+
 }

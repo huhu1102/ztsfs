@@ -21,8 +21,10 @@ public class ContractController {
      * 分页模糊条件查询
      */
     @RequestMapping(value = "/findbypage",	 method = RequestMethod.GET)
-    public ResultPage<Contract> findbypage(String contractName,String clientName,String empName,String createDateStart,String createDateEnd,String startDateStart,String startDateEnd,String endDateStart,String endDateEnd,Integer status,int page, int size) {
-        return contractService.findSearch(contractName,clientName,empName,createDateStart,createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,status, page,size);
+    public ResultPage<Contract> findbypage(String contractName,String clientName,String empName,String createDateStart,String createDateEnd,String startDateStart,String startDateEnd,String endDateStart,String endDateEnd,String signDateStart,
+                                           String signDateEnd ,Integer status,int page, int size) {
+        return contractService.findSearch(contractName,clientName,empName,createDateStart,createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,signDateStart, signDateEnd ,status, page,size);
+
     }
     /*
      * 新增
