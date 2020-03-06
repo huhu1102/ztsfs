@@ -51,6 +51,9 @@ public class SalesOrder extends BasePo {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date signContractDate;
 
+
+	private boolean hasContract;//是否有合同
+
 	//关联合同
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="zt_salesorder_contract",joinColumns={@JoinColumn(name="s_id")}
@@ -71,10 +74,8 @@ public class SalesOrder extends BasePo {
 	private Integer orderStatus;
 	@Column(columnDefinition ="varchar(255)  COMMENT '税收.'" )
 	private  Float  tax;
-	private boolean hasContract;//是否有合同
 
-	//合同url
-	private String imageUrl;
+
 	
 	//关联订单详情
 	@OneToMany(mappedBy = "salesOrder",cascade = CascadeType.ALL)
@@ -101,13 +102,7 @@ public class SalesOrder extends BasePo {
 		this.employee = employee;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
 
 	public Client getCliente() {
 		return cliente;

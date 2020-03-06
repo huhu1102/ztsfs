@@ -101,17 +101,9 @@ public class ProductManageDetailsServiceImp implements ProductManageDetailsServi
     public ResultPage<ProductManageDetails> findByMangeId(long manageId, int page, int size, String start, String end) {
         ResultPage<ProductManageDetails> ro = new ResultPage<>();
         Pageable pageable = PageRequest.of(page - 1, size);
-
-           Map<String,String> map  = Utils.updateTime(start,end);
-           logger.info(map.get("0"));
-         if(!(start.equals(""))){
-             start= Utils.parseTimeZone(start);
-             logger.info(start);
-         }
-         if(!(end.equals(""))){
-             end= Utils.parseTimeZone(end);
-           logger.info(end);
-         }
+        Map<String, String> stringStringMap = Utils.updateTime(start, end);
+        start = stringStringMap.get("0");
+        end = stringStringMap.get("1");
 
         Page<ProductManageDetails> pages = productManageDetailsDao.findByMangeId(manageId,start,end,pageable);
         if (pages != null) {

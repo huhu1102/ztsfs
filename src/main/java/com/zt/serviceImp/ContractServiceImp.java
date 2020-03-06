@@ -2,6 +2,8 @@ package com.zt.serviceImp;
 
 import com.zt.common.Message;
 import com.zt.common.MessageUtil;
+import com.zt.common.Utils;
+
 import com.zt.dao.ClientDao;
 import com.zt.dao.ContractDao;
 import com.zt.dao.EmployeeDao;
@@ -15,11 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import java.util.Map;
 
 @Service
 public class ContractServiceImp implements ContractService {
@@ -36,14 +42,42 @@ public class ContractServiceImp implements ContractService {
     ClientDao clientDao;
     @Autowired
     EmployeeDao employeeDao;
-    /*
-    查询方法
+
+
+    /**
+     *
+     * @param contractName
+     * @param clientName
+     * @param empName
+     * @param createDateStart
+     * @param createDateEnd
+     * @param startDateStart
+     * @param startDateEnd
+     * @param endDateStart
+     * @param endDateEnd
+     * @param status
+     * @param page
+     * @param size
+     * @return
      */
     @Override
-    public ResultPage<Contract> findSearch(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd, Integer status, int page, int size) {
+    public ResultPage<Contract> findSearch(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd,
+                                           String endDateStart, String endDateEnd, String signDateStart,
+                                           String signDateEnd ,Integer status, int page, int size) {
         ResultPage<Contract> ro = new ResultPage<>();
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Contract> pages = contractDao.findSearch(contractName, clientName, empName, createDateStart, createDateEnd, startDateStart, startDateEnd, endDateStart, endDateEnd, status, pageable);
+        Map<String, String> stringStringMap = Utils.updateTime(createDateStart, createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,signDateStart, signDateEnd);
+        createDateStart = stringStringMap.get("0");
+        createDateEnd = stringStringMap.get("1");
+        startDateStart = stringStringMap.get("2");
+        startDateEnd = stringStringMap.get("3");
+        endDateStart = stringStringMap.get("4");
+        endDateEnd = stringStringMap.get("5");
+        signDateStart = stringStringMap.get("6");
+        signDateEnd = stringStringMap.get("7");
+
+        Page<Contract> pages = contractDao.findSearch(contractName, clientName, empName, createDateStart, createDateEnd, startDateStart, startDateEnd, endDateStart, endDateEnd,signDateStart,signDateEnd, status, pageable);
+
         if (pages.getContent()!= null) {
             ro.setData(pages.getContent());
             ro.setTotal(pages.getTotalElements());

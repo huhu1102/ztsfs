@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -226,6 +227,7 @@ public class SalesOrderServiceImp implements SalesOrderService {
     public ResultPage<SalesOrder> findSearch(String clientName, String productName, String empName, String start, String end, Integer status, int page, int size) throws BusinessRuntimeException {
         ResultPage<SalesOrder> ro = new ResultPage<>();
         Pageable pageable = PageRequest.of(page - 1, size);
+
         Page<SalesOrder> pages = salesOrderDao.findSearch(clientName, empName, start, end, status, pageable);
         logger.info(pages.getContent().toString());
         if (pages != null) {
