@@ -9,7 +9,8 @@ import com.zt.vo.ProductModel;
 public interface ContractService {
 
 
-    ResultPage<Contract> findSearch(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd, String signDateStart,
+    ResultPage<Contract> findSearch(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd,
+                                    String endDateStart, String endDateEnd, String signDateStart,
                                     String signDateEnd ,Integer status, int page, int size);
 
 

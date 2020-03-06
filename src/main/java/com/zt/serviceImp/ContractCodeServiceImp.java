@@ -1,0 +1,87 @@
+package com.zt.serviceImp;
+
+import com.zt.dao.ContractCodeDao;
+import com.zt.model.*;
+import com.zt.po.ContractCode;
+import com.zt.service.ContractCodeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Date;
+import java.util.List;
+
+public class ContractCodeServiceImp implements ContractCodeService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private ContractCodeDao contractCodeDao;
+
+    /**
+     * 查询所有
+     * @return
+     * @throws BusinessRuntimeException
+     */
+    @Override
+    public ResultObject<ContractCode> findAll() throws BusinessRuntimeException {
+        ResultObject<ContractCode> ro = new ResultObject<>();
+        List<ContractCode> contractCode = contractCodeDao.findAll();
+        if(contractCode!=null){
+            ro.setData(contractCode);
+            ro.setSuccess(true);
+            logger.info("查询成功");
+        }else{
+            ro.setSuccess(false);
+            logger.info("查询失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+        return ro;
+    }
+
+    /**
+     * 新增和修改
+     * @param contractCode
+     * @return
+     * @throws BusinessRuntimeException
+     */
+    @Override
+    public ResultObject<ContractCode> add(ContractCode contractCode) throws BusinessRuntimeException {
+        ResultObject<ContractCode> ro = new ResultObject<>();
+        if(Long.valueOf(contractCode.getId()).equals("null")||contractCode.getId()==0) {
+            contractCode.setCreateDate(new Date());
+        }
+        contractCode.setEnabled(true);
+        contractCode = contractCodeDao.saveAndFlush(contractCode);
+        if (contractCode!=null&&contractCode.getId()>0) {
+            ro.setSuccess(true);
+            ro.setMsg("操作成功！");
+        }else {
+            ro.setSuccess(false);
+            ro.setMsg("操作失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+        return ro;
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     * @throws BusinessRuntimeException
+     */
+    @Override
+    public ResultObject<ContractCode> delete(long id) throws BusinessRuntimeException {
+        ResultObject<ContractCode> ro = new ResultObject<>();
+        ContractCode contractCode = contractCodeDao.findById(id);
+        if(contractCode!=null){
+            contractCode.setEnabled(false);
+            contractCodeDao.saveAndFlush(contractCode);
+            ro.setSuccess(true);
+            ro.setMsg("删除成功");
+        }else{
+            ro.setSuccess(false);
+            ro.setMsg("操作失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+        return ro;
+    }
+}
