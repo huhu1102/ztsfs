@@ -50,7 +50,6 @@ public class Contract extends BasePo{
     @Temporal(TemporalType.TIMESTAMP)
     private Date backMoneyEndDate;
 
-
     //质保金 e.g 5%
     private float qualityDeposit;
 
@@ -58,7 +57,6 @@ public class Contract extends BasePo{
      * 1.已支付
      * 2.未支付
      */
-
     private Integer  qualityDepositStatus;
 
     //质保金结束日期
