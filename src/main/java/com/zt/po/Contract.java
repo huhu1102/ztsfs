@@ -16,6 +16,10 @@ public class Contract extends BasePo{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    //序号
+    @Column(columnDefinition ="varchar(255)  COMMENT '序号.'" )
+    private String sequence;
+
     //合同名称
     @Column(columnDefinition ="varchar(255)  COMMENT '合同名称.'" )
     private String contractName;
@@ -46,7 +50,7 @@ public class Contract extends BasePo{
     private BigDecimal backMoney;
 
     //回款时间
-    @Column(columnDefinition ="datetime COMMENT '截止时间'" )
+    @Column(columnDefinition ="datetime COMMENT '回款时间'" )
     @Temporal(TemporalType.TIMESTAMP)
     private Date backMoneyEndDate;
 
@@ -62,13 +66,12 @@ public class Contract extends BasePo{
     private Integer  qualityDepositStatus;
 
     //质保金结束日期
-    @Column(columnDefinition ="datetime COMMENT '截止时间'" )
+    @Column(columnDefinition ="datetime COMMENT '质保金结束时间'" )
     @Temporal(TemporalType.TIMESTAMP)
     private Date qualityDepositEndDate;
 
     //增值税 e.g 16%
     private float tax;
-
 
     //合同类型
     @Column(columnDefinition ="varchar(255)  COMMENT '合同类型.'" )
@@ -85,11 +88,11 @@ public class Contract extends BasePo{
 
     //合同履约期限
     //开始时间
-    @Column(columnDefinition ="datetime COMMENT '开始时间'" )
+    @Column(columnDefinition ="datetime COMMENT '合同生效时间'" )
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     //截止时间
-    @Column(columnDefinition ="datetime COMMENT '截止时间'" )
+    @Column(columnDefinition ="datetime COMMENT '合同失效时间'" )
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
@@ -326,5 +329,13 @@ public class Contract extends BasePo{
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 }

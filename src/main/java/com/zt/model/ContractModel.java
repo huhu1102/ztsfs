@@ -11,13 +11,19 @@ public class ContractModel extends BasePo {
     private static final long serialVersionUID = 1L;
     private long contractId;
     private String uploadIds;
-    //合同名称
+    /**
+     * 合同名称
+     */
     private String contractName;
-    //合同编号
+    /**
+     * 合同编号
+     */
     private String contractNumber;
     //负责人
     private Long empId;
-    //客户Id
+    /**
+     * 客户Id
+     */
     private Long cliId;
 
     //附件名字
@@ -33,9 +39,13 @@ public class ContractModel extends BasePo {
     private float tax;
     //合同类型
     private String type;
-    //总金额
+    /**
+     * 合同金额
+     */
     private BigDecimal totalMoney;
-    //签约时间
+    /**
+     *  签约时间
+     */
     private Date signContractDate;
     //合同履约期限
     //开始时间
@@ -48,6 +58,18 @@ public class ContractModel extends BasePo {
     private boolean enabled;
     //创建时间
     private Date createDate;
+
+    /**
+     * 合同详情
+     * @return
+     */
+    private String contractDetails;
+
+    /**
+     * 合同流程
+     * @return
+     */
+    private String contractCode;
 
     public long getContractId() {
         return contractId;
