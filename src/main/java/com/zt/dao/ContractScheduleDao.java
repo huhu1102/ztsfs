@@ -1,0 +1,16 @@
+package com.zt.dao;
+
+import com.zt.po.ContractSchedule;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(collectionResourceRel = "contractSchedule", path="contractSchedule")
+public interface ContractScheduleDao extends JpaRepository<ContractSchedule,Long> {
+
+    @Query("SELECT  c from ContractSchedule c where c.enabled=true")
+    ContractSchedule findByContractCodeId();
+
+    @Query("select c  from ContractSchedule c where c.enabled=true and c.id=?1")
+    ContractSchedule findById(long id);
+}

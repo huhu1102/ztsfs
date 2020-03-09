@@ -43,7 +43,7 @@ public class Contract extends BasePo{
     //客户Id
     @Column(columnDefinition ="bigint(20)  COMMENT '客户Id.'" )
     private long cliId;
-    //前台展示使用；
+    //前台展示使用
     private String clientArr;
 
     //回款金额
