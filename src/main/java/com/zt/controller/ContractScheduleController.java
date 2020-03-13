@@ -2,6 +2,7 @@ package com.zt.controller;
 
 import com.zt.model.BusinessRuntimeException;
 import com.zt.model.ResultObject;
+import com.zt.po.ContractCode;
 import com.zt.po.ContractSchedule;
 import com.zt.service.ContractScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class ContractScheduleController {
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public ResultObject<ContractSchedule> delete(long id) throws BusinessRuntimeException {
         return contractScheduleService.delete(id);
+    }
+
+    @RequestMapping(value = "/findByContractId",method = RequestMethod.GET)
+    public ResultObject<ContractSchedule> findByContractId(long  id) throws BusinessRuntimeException {
+        return contractScheduleService.findByContractId(id);
     }
 }

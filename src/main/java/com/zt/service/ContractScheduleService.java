@@ -2,6 +2,7 @@ package com.zt.service;
 
 import com.zt.model.BusinessRuntimeException;
 import com.zt.model.ResultObject;
+import com.zt.po.ContractCode;
 import com.zt.po.ContractSchedule;
 
 public interface ContractScheduleService {
@@ -18,4 +19,6 @@ public interface ContractScheduleService {
     删除
      */
     ResultObject<ContractSchedule> delete(long id)throws BusinessRuntimeException;
+
+    ResultObject<ContractSchedule> findByContractId(long id);
 }

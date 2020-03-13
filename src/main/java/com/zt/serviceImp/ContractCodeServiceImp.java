@@ -1,5 +1,6 @@
 package com.zt.serviceImp;
 
+import com.zt.common.PinyinUtils;
 import com.zt.dao.ContractCodeDao;
 import com.zt.model.*;
 import com.zt.po.ContractCode;
@@ -34,6 +35,7 @@ public class ContractCodeServiceImp implements ContractCodeService {
         }else{
             ro.setSuccess(false);
             logger.info("查询失败");
+            ro.setMsg("查询成功！");
             throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
         }
         return ro;
@@ -51,11 +53,12 @@ public class ContractCodeServiceImp implements ContractCodeService {
         if(Long.valueOf(contractCode.getId()).equals("null")||contractCode.getId()==0) {
             contractCode.setCreateDate(new Date());
         }
+        contractCode.setCode( PinyinUtils.getPingYin(PinyinUtils.cleanChar(contractCode.getCodeName())));
         contractCode.setEnabled(true);
         contractCode = contractCodeDao.saveAndFlush(contractCode);
         if (contractCode!=null&&contractCode.getId()>0) {
             ro.setSuccess(true);
-            ro.setMsg("操作成功！");
+            ro.setMsg("保存成功！");
         }else {
             ro.setSuccess(false);
             ro.setMsg("操作失败");
@@ -74,11 +77,11 @@ public class ContractCodeServiceImp implements ContractCodeService {
     public ResultObject<ContractCode> delete(long id) throws BusinessRuntimeException {
         ResultObject<ContractCode> ro = new ResultObject<>();
         ContractCode contractCode = contractCodeDao.findById(id);
-        if(contractCode!=null){
+        if(null!=contractCode){
             contractCode.setEnabled(false);
-            contractCodeDao.saveAndFlush(contractCode);
+            contractCode=contractCodeDao.saveAndFlush(contractCode);
             ro.setSuccess(true);
-            ro.setMsg("删除成功");
+            ro.setMsg("已删除");
         }else{
             ro.setSuccess(false);
             ro.setMsg("操作失败");
@@ -86,4 +89,5 @@ public class ContractCodeServiceImp implements ContractCodeService {
         }
         return ro;
     }
+
 }

@@ -101,7 +101,6 @@ public class Contract extends BasePo{
      * 3.废弃
      */
     private int contractStatus;
-
     //备注
     private String notes;
     //是否可用

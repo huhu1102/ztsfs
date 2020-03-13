@@ -18,4 +18,6 @@ public interface ContractCodeService {
     删除
      */
     ResultObject<ContractCode> delete(long id)throws BusinessRuntimeException;
+
+
 }

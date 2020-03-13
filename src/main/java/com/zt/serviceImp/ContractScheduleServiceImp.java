@@ -5,6 +5,7 @@ import com.zt.dao.ContractScheduleDao;
 import com.zt.model.BusinessRuntimeException;
 import com.zt.model.ResultCode;
 import com.zt.model.ResultObject;
+import com.zt.po.ContractCode;
 import com.zt.po.ContractSchedule;
 import com.zt.service.ContractScheduleService;
 import org.slf4j.Logger;
@@ -79,4 +80,18 @@ public class ContractScheduleServiceImp implements ContractScheduleService {
         }
         return ro;
     }
-}
+
+    @Override
+    public ResultObject<ContractSchedule> findByContractId(long id) {
+        ResultObject<ContractSchedule> ro = new ResultObject<>();
+        List<ContractSchedule> schedulelist = contractScheduleDao.findByCodeId(id);
+        if (null != schedulelist) {
+           ro.setData(schedulelist);
+           ro.setSuccess(true);
+        }else{
+            ro.setSuccess(false);
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+        return ro;
+      }
+    }

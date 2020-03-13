@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.List;
+
 @RepositoryRestResource(collectionResourceRel = "contractSchedule", path="contractSchedule")
 public interface ContractScheduleDao extends JpaRepository<ContractSchedule,Long> {
 
@@ -13,4 +15,6 @@ public interface ContractScheduleDao extends JpaRepository<ContractSchedule,Long
 
     @Query("select c  from ContractSchedule c where c.enabled=true and c.id=?1")
     ContractSchedule findById(long id);
+    @Query("SELECT  c from ContractSchedule c where c.enabled=true and c.contractCodeId=?1")
+    List<ContractSchedule> findByCodeId(long id);
 }
