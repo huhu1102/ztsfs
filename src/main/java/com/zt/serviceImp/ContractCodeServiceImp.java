@@ -25,9 +25,9 @@ public class ContractCodeServiceImp implements ContractCodeService {
      * @throws BusinessRuntimeException
      */
     @Override
-    public ResultObject<ContractCode> findAll() throws BusinessRuntimeException {
+    public ResultObject<ContractCode> findAllcodes() throws BusinessRuntimeException {
         ResultObject<ContractCode> ro = new ResultObject<>();
-        List<ContractCode> contractCode = contractCodeDao.findAll();
+        List<ContractCode> contractCode = contractCodeDao.findAllcodes();
         if(contractCode!=null){
             ro.setData(contractCode);
             ro.setSuccess(true);

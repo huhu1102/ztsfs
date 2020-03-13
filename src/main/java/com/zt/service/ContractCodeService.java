@@ -9,7 +9,7 @@ public interface ContractCodeService {
     /*
     查询所有
     */
-    ResultObject<ContractCode> findAll() throws BusinessRuntimeException;
+    ResultObject<ContractCode> findAllcodes() throws BusinessRuntimeException;
     /*
     新增和修改
      */

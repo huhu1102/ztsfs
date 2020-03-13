@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/contractSchedule")
+@RequestMapping("/contractcode")
 public class ContractCodeController {
     @Autowired
     ContractCodeService contractCodeService;
@@ -18,12 +18,12 @@ public class ContractCodeController {
     查询方法
      */
     @RequestMapping(value = "/findAll",method = RequestMethod.GET)
-    public ResultObject<ContractCode> findAll() throws BusinessRuntimeException {
-        return contractCodeService.findAll();
+    public ResultObject<ContractCode> findAllcodes() throws BusinessRuntimeException {
+        return contractCodeService.findAllcodes();
     }
 
     /*
-    新增修改
+    新增修改`
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ResultObject<ContractCode> add(ContractCode contractCode) throws BusinessRuntimeException {
