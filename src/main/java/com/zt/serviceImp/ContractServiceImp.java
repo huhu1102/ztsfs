@@ -3,7 +3,6 @@ package com.zt.serviceImp;
 import com.zt.common.Message;
 import com.zt.common.MessageUtil;
 import com.zt.common.Utils;
-
 import com.zt.dao.ClientDao;
 import com.zt.dao.ContractDao;
 import com.zt.dao.EmployeeDao;
@@ -17,14 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
-
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import java.util.Map;
 
 @Service
@@ -107,6 +103,7 @@ public class ContractServiceImp implements ContractService {
             }
         }
         contract.setEnabled(true);
+        contract.setSequence(createSequence());
         contract.setCreateDate(new Date());
         contract.setCliente(clientDao.findById(contract.getCliId()));
         Employee employee = employeeDao.findById(contract.getEmpId());
@@ -200,5 +197,18 @@ public class ContractServiceImp implements ContractService {
             ro.setMsg("删除失败");
         }
         return ro;
+    }
+    //自动生成合同序号
+    public String createSequence(){
+        String num = "C00001";
+        //查询当前合同表中最大的序号
+        String maxSequence = contractDao.maxSequence();
+        StringBuilder sb = new StringBuilder();
+        if(maxSequence!=null){
+            String sub = maxSequence.substring(1);
+            sb.append("C").append(String.format("%05d",Integer.parseInt(sub)+1));
+            num = sb.toString();
+        }
+        return num;
     }
 }

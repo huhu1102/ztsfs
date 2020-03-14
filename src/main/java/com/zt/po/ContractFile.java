@@ -3,10 +3,13 @@ package com.zt.po;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * 合同档案(也就是基本信息)
+ */
 @Entity
 @Table(name="zt_contractfile")
 @Inheritance(strategy = InheritanceType.JOINED)
-@org.hibernate.annotations.Table(appliesTo = "zt_contractfile",comment="合同归档记录")
+@org.hibernate.annotations.Table(appliesTo = "zt_contractfile",comment="合同档案")
 public class ContractFile extends BasePo{
     private static final long serialVersionUID = 7134708623983128710L;
     @Id
@@ -18,6 +21,8 @@ public class ContractFile extends BasePo{
     @ManyToOne
     @JoinColumn(name="clienteleid")
     private Client client;
+
+    private long clientId;
     //合同编号
     @Column(columnDefinition ="varchar(255)  COMMENT '合同编号.'" )
     private String contractSerialNo;
@@ -28,7 +33,7 @@ public class ContractFile extends BasePo{
     private Date signDate;
 
     //份数
-    @Column(columnDefinition ="int(2)  COMMENT '合同编号.'" )
+    @Column(columnDefinition ="int(2)  COMMENT '份数.'" )
     private int amount;
 
     //合同摘要
@@ -54,7 +59,12 @@ public class ContractFile extends BasePo{
      * 2.无
      * 3.有部分
      */
-    private Integer  state;
+    private Integer  status;
+
+    //附件名字
+    private String uploadName;
+    //附件url
+    private String imageUrl;
 
     //是否可用
     @Column(columnDefinition ="TINYINT(1)  COMMENT '是否可用'" )
@@ -86,6 +96,14 @@ public class ContractFile extends BasePo{
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getContractSerialNo() {
@@ -144,12 +162,12 @@ public class ContractFile extends BasePo{
         this.endDate = endDate;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public boolean isEnabled() {
@@ -166,5 +184,21 @@ public class ContractFile extends BasePo{
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getUploadName() {
+        return uploadName;
+    }
+
+    public void setUploadName(String uploadName) {
+        this.uploadName = uploadName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
