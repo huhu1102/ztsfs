@@ -10,7 +10,6 @@ import com.zt.dao.UploadFileDao;
 import com.zt.model.*;
 import com.zt.po.Contract;
 import com.zt.po.Employee;
-import com.zt.po.UploadFile;
 import com.zt.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,9 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -93,15 +90,6 @@ public class ContractServiceImp implements ContractService {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();
         Contract contract = mo.v2p(contractModel);
-        List<UploadFile> uploadFileList = new ArrayList<>();
-        String uploadIds = contractModel.getUploadIds();
-        String[] split = uploadIds.trim().split(",");
-        if(split.length>0){
-            for (int i = 0,n = split.length; i < n; i++) {
-                UploadFile u = uploadFileDao.findById(Long.parseLong(split[i]));
-                uploadFileList.add(u);
-            }
-        }
         contract.setEnabled(true);
         contract.setSequence(createSequence());
         contract.setCreateDate(new Date());
@@ -136,15 +124,6 @@ public class ContractServiceImp implements ContractService {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();
         Contract contract = mo.v2p(contractModel);
-        List<UploadFile> uploadFileList = new ArrayList<>();
-        String uploadIds = contractModel.getUploadIds();
-        String[] split = uploadIds.trim().split(",");
-        if(split.length>0){
-            for (int i = 0,n = split.length; i < n; i++) {
-                UploadFile u = uploadFileDao.findById(Long.parseLong(split[i]));
-                uploadFileList.add(u);
-            }
-        }
         contract.setEnabled(true);
         contract.setCreateDate(new Date());
         contract.setCliente(clientDao.findById(contract.getCliId()));

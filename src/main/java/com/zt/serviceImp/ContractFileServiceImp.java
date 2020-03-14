@@ -1,10 +1,9 @@
 package com.zt.serviceImp;
 
+import com.zt.dao.ClientDao;
 import com.zt.dao.ContractFileDao;
-import com.zt.model.BusinessRuntimeException;
-import com.zt.model.ResultCode;
-import com.zt.model.ResultObject;
-import com.zt.model.ResultPage;
+import com.zt.model.*;
+import com.zt.po.Client;
 import com.zt.po.ContractFile;
 import com.zt.service.ContractFileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,8 @@ import java.util.Date;
 public class ContractFileServiceImp implements ContractFileService {
     @Autowired
     ContractFileDao contractFileDao;
+    @Autowired
+    ClientDao clientDao;
     /*
     分页查询
      */
@@ -39,15 +40,19 @@ public class ContractFileServiceImp implements ContractFileService {
         return ro;
     }
     /*
-    添加更新
+    添加方法
      */
     @Override
-    public ResultObject<ContractFile> add(ContractFile contractFile) {
+    public ResultObject<ContractFile> add(ContractFileModel contractFileModel) {
         ResultObject<ContractFile> ro = new ResultObject<>();
+        ContractFileModel mo =  new ContractFileModel();
+        ContractFile contractFile = mo.v2p(contractFileModel);
         if(Long.valueOf(contractFile.getId()).equals("null")||contractFile.getId()==0) {
             contractFile.setCreateDate(new Date());
         }
         contractFile.setEnabled(true);
+        Client client = clientDao.findById(contractFile.getClientId());
+        contractFile.setClient(client);
         contractFile = contractFileDao.saveAndFlush(contractFile);
         if (contractFile!=null&&contractFile.getId()>0) {
             ro.setSuccess(true);
@@ -59,6 +64,34 @@ public class ContractFileServiceImp implements ContractFileService {
         }
         return ro;
     }
+
+    /*
+    修改
+     */
+    @Override
+    public ResultObject<ContractFile> update(ContractFileModel contractFileModel) {
+        ResultObject<ContractFile> ro = new ResultObject<>();
+        ContractFileModel mo =  new ContractFileModel();
+        ContractFile contractFile = mo.v2p(contractFileModel);
+        if(Long.valueOf(contractFile.getId()).equals("null")||contractFile.getId()==0) {
+            contractFile.setCreateDate(new Date());
+        }
+        contractFile.setEnabled(true);
+        Client client = clientDao.findById(contractFile.getClientId());
+        contractFile.setClient(client);
+        contractFile = contractFileDao.saveAndFlush(contractFile);
+        if (contractFile!=null&&contractFile.getId()>0) {
+            ro.setSuccess(true);
+            ro.setMsg("操作成功！");
+        }else {
+            ro.setSuccess(false);
+            ro.setMsg("操作失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+        return ro;
+    }
+
+
     /*
     删除
      */

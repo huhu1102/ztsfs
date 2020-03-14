@@ -1,11 +1,13 @@
 package com.zt.serviceImp;
 
 
+import com.zt.dao.ContractCodeDao;
 import com.zt.dao.ContractScheduleDao;
+import com.zt.dao.EmployeeDao;
 import com.zt.model.BusinessRuntimeException;
+import com.zt.model.ContractScheduleModel;
 import com.zt.model.ResultCode;
 import com.zt.model.ResultObject;
-import com.zt.po.ContractCode;
 import com.zt.po.ContractSchedule;
 import com.zt.service.ContractScheduleService;
 import org.slf4j.Logger;
@@ -22,6 +24,11 @@ public class ContractScheduleServiceImp implements ContractScheduleService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     ContractScheduleDao contractScheduleDao;
+    @Autowired
+    ContractCodeDao contractCodeDao;
+    @Autowired
+    EmployeeDao employeeDao;
+
     /*
     查询所有
      */
@@ -40,16 +47,22 @@ public class ContractScheduleServiceImp implements ContractScheduleService {
         }
         return ro;
     }
+
+
     /*
     新增
      */
     @Override
-    public ResultObject<ContractSchedule> add(ContractSchedule contractSchedule) throws BusinessRuntimeException {
+    public ResultObject<ContractSchedule> add(ContractScheduleModel contractScheduleModel) throws BusinessRuntimeException {
         ResultObject<ContractSchedule> ro = new ResultObject<>();
+        ContractScheduleModel mo= new ContractScheduleModel();
+        ContractSchedule contractSchedule = mo.v2p(contractScheduleModel);
         if(Long.valueOf(contractSchedule.getId()).equals("null")||contractSchedule.getId()==0) {
             contractSchedule.setCreateDate(new Date());
         }
         contractSchedule.setEnabled(true);
+        contractSchedule.setContractCode(contractCodeDao.findById(contractSchedule.getContractCodeId()));
+        contractSchedule.setOperator(employeeDao.findById(contractSchedule.getOperatorId()));
         contractSchedule = contractScheduleDao.saveAndFlush(contractSchedule);
         if (contractSchedule!=null&&contractSchedule.getId()>0) {
             ro.setSuccess(true);
@@ -61,6 +74,32 @@ public class ContractScheduleServiceImp implements ContractScheduleService {
         }
         return ro;
     }
+    /*
+    修改
+     */
+    @Override
+    public ResultObject<ContractSchedule> update(ContractScheduleModel contractScheduleModel) throws BusinessRuntimeException {
+        ResultObject<ContractSchedule> ro = new ResultObject<>();
+        ContractScheduleModel mo= new ContractScheduleModel();
+        ContractSchedule contractSchedule = mo.v2p(contractScheduleModel);
+        if(Long.valueOf(contractSchedule.getId()).equals("null")||contractSchedule.getId()==0) {
+            contractSchedule.setCreateDate(new Date());
+        }
+        contractSchedule.setEnabled(true);
+        contractSchedule.setContractCode(contractCodeDao.findById(contractSchedule.getContractCodeId()));
+        contractSchedule.setOperator(employeeDao.findById(contractSchedule.getOperatorId()));
+        contractSchedule = contractScheduleDao.saveAndFlush(contractSchedule);
+        if (contractSchedule!=null&&contractSchedule.getId()>0) {
+            ro.setSuccess(true);
+            ro.setMsg("操作成功！");
+        }else {
+            ro.setSuccess(false);
+            ro.setMsg("操作失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+        return ro;
+    }
+
     /*
     删除
      */
@@ -81,17 +120,4 @@ public class ContractScheduleServiceImp implements ContractScheduleService {
         return ro;
     }
 
-    @Override
-    public ResultObject<ContractSchedule> findByContractId(long id) {
-        ResultObject<ContractSchedule> ro = new ResultObject<>();
-        List<ContractSchedule> schedulelist = contractScheduleDao.findByCodeId(id);
-        if (null != schedulelist) {
-           ro.setData(schedulelist);
-           ro.setSuccess(true);
-        }else{
-            ro.setSuccess(false);
-            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
-        }
-        return ro;
-      }
-    }
+}

@@ -1,8 +1,8 @@
 package com.zt.controller;
 
 import com.zt.model.BusinessRuntimeException;
+import com.zt.model.ContractScheduleModel;
 import com.zt.model.ResultObject;
-import com.zt.po.ContractCode;
 import com.zt.po.ContractSchedule;
 import com.zt.service.ContractScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,15 @@ public class ContractScheduleController {
     新增修改
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ResultObject<ContractSchedule> add(ContractSchedule  contractSchedule) throws BusinessRuntimeException {
-        return contractScheduleService.add(contractSchedule);
+    public ResultObject<ContractSchedule> add(ContractScheduleModel  contractScheduleModel) throws BusinessRuntimeException {
+        return contractScheduleService.add(contractScheduleModel);
+    }
+    /*
+    修改
+     */
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ResultObject<ContractSchedule> update(ContractScheduleModel contractScheduleModel) throws BusinessRuntimeException {
+        return contractScheduleService.update(contractScheduleModel);
     }
     /*
     删除
@@ -37,8 +44,4 @@ public class ContractScheduleController {
         return contractScheduleService.delete(id);
     }
 
-    @RequestMapping(value = "/findByContractId",method = RequestMethod.GET)
-    public ResultObject<ContractSchedule> findByContractId(long  id) throws BusinessRuntimeException {
-        return contractScheduleService.findByContractId(id);
-    }
 }
