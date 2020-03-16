@@ -101,10 +101,10 @@ public class EmployeeController {
 	 *  查询钱前台页面在员工修改页面需要的数据
 	 */
 	@RequestMapping(value="/basicdata",method=RequestMethod.GET)
-	  public ResultObject<Object> basicdata(){
-	    
+	public ResultObject<Object> basicdata(){
+
 		return employeeService.getBaseData();
-	  }
+	}
 	/**
 	 * @param telphone
 	 * @return

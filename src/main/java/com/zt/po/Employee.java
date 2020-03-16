@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name="zt_employee")
 @org.hibernate.annotations.Table(appliesTo = "zt_employee",comment="员工实体类")
 public class Employee extends BasePo{
-	private static final long serialVersionUID = 1L;
+	private static final long		 serialVersionUID = 1L;
 	//主键id
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
