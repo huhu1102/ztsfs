@@ -3,6 +3,9 @@ package com.zt.po;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * 合同归档记录(也就是谁用了,用了多久的记录表)
+ */
 @Entity
 @Table(name="zt_contractuserecord")
 @Inheritance(strategy = InheritanceType.JOINED)

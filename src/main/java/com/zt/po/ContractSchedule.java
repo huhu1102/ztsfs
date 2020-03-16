@@ -6,6 +6,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * 合同进度(合同进度的更新)
+ */
 @Entity
 @Table(name="zt_contractschedule")
 @EntityListeners(AuditingEntityListener.class)
@@ -25,8 +28,15 @@ public class ContractSchedule extends BasePo{
     @Column(columnDefinition ="varchar(255)  COMMENT '备注'" )
     private String note;
 
+    private long operatorId;
+
     @ManyToOne
     private Employee  operator;
+    /**
+     * 状态:
+     * 1.
+     */
+    private Integer statue;
 
     //是否可用
     @Column(columnDefinition ="TINYINT(1)  COMMENT '是否可用'" )
@@ -87,6 +97,21 @@ public class ContractSchedule extends BasePo{
         return enabled;
     }
 
+    public Integer getStatue() {
+        return statue;
+    }
+
+    public void setStatue(Integer statue) {
+        this.statue = statue;
+    }
+
+    public long getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(long operatorId) {
+        this.operatorId = operatorId;
+    }
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

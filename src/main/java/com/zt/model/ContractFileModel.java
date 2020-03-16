@@ -1,64 +1,41 @@
-package com.zt.po;
+package com.zt.model;
 
-import javax.persistence.*;
+import com.zt.po.BasePo;
+import com.zt.po.ContractFile;
+
 import java.util.Date;
 
-/**
- * 合同档案(也就是基本信息)
- */
-@Entity
-@Table(name="zt_contractfile")
-@Inheritance(strategy = InheritanceType.JOINED)
-@org.hibernate.annotations.Table(appliesTo = "zt_contractfile",comment="合同档案")
-public class ContractFile extends BasePo{
-    private static final long serialVersionUID = 7134708623983128710L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    //序号
-    private Integer  contractNo;
-    //客户
-    @ManyToOne
-    @JoinColumn(name="clienteleid")
-    private Client client;
+public class ContractFileModel extends BasePo {
 
+    private static final long serialVersionUID = 1L;
+
+    //合同档案Id
+    private long contractFileId;
+
+    //客户Id
     private long clientId;
+
     //合同编号
-    @Column(columnDefinition ="varchar(255)  COMMENT '合同编号.'" )
     private String contractSerialNo;
 
     //签订时间
-    @Column(columnDefinition ="datetime COMMENT '签订时间'" )
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date signDate;
+    private  Date signDate;
 
     //份数
-    @Column(columnDefinition ="int(2)  COMMENT '份数.'" )
     private int amount;
 
     //合同摘要
-    @Column(columnDefinition ="varchar(255)  COMMENT '合同摘要.'" )
     private String contractDescription;
 
     //合同相关
-    @Column(columnDefinition ="varchar(255)  COMMENT '合同相关.'" )
     private String contractNote;
 
     //质保金
-    @Column(columnDefinition ="varchar(255)  COMMENT '质保金.'" )
     private String  retentionMoney;
 
     //到期时间
-    @Column(columnDefinition ="datetime COMMENT '到期时间'" )
-    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-
-    /**
-     * 合同状态
-     * 1.有
-     * 2.无
-     * 3.有部分
-     */
+    //状态
     private Integer  status;
 
     //附件名字
@@ -66,36 +43,12 @@ public class ContractFile extends BasePo{
     //附件url
     private String imageUrl;
 
-    //是否可用
-    @Column(columnDefinition ="TINYINT(1)  COMMENT '是否可用'" )
-    private boolean  enabled;
-
-    //创建时间
-    @Column(columnDefinition ="datetime COMMENT '创建时间'" )
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    public long getId() {
-        return id;
+    public long getContractFileId() {
+        return contractFileId;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Integer getContractNo() {
-        return contractNo;
-    }
-
-    public void setContractNo(Integer contractNo) {
-        this.contractNo = contractNo;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
+    public void setContractFileId(long contractFileId) {
+        this.contractFileId = contractFileId;
     }
 
     public long getClientId() {
@@ -170,22 +123,6 @@ public class ContractFile extends BasePo{
         this.status = status;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
     public String getUploadName() {
         return uploadName;
     }
@@ -200,5 +137,24 @@ public class ContractFile extends BasePo{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public ContractFile v2p(ContractFileModel model){
+        ContractFile con = new ContractFile();
+        if(model.getContractFileId()!=0&&model.getClientId()!=0){
+            con.setId(model.getContractFileId());
+            con.setClientId(model.getClientId());
+        }
+        con.setContractSerialNo(model.getContractSerialNo());
+        con.setSignDate(model.getSignDate());
+        con.setAmount(model.getAmount());
+        con.setContractDescription(model.getContractDescription());
+        con.setContractNote(model.getContractNote());
+        con.setRetentionMoney(model.getRetentionMoney());
+        con.setEndDate(model.getEndDate());
+        con.setStatus(model.getStatus());
+        con.setUploadName(model.getUploadName());
+        con.setImageUrl(model.getImageUrl());
+        return con;
     }
 }

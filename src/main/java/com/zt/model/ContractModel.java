@@ -26,9 +26,13 @@ public class ContractModel extends BasePo {
      */
     private Long cliId;
 
-    //附件名字
+    /**
+    附件名字
+     */
     private String uploadName;
-    //附件url
+    /**
+     * 附件url
+     */
     private String imageUrl;
 
     //前台展示使用；
@@ -229,21 +233,22 @@ public class ContractModel extends BasePo {
         if(mo.getContractId()!=0){
             c.setId(mo.getContractId());
         }
-        c.setImageUrl(mo.getImageUrl());
-        c.setUploadName(mo.getUploadName());
-        c.setCliId(mo.getCliId());
-        c.setEmpId(mo.getEmpId());
-        c.setSignContractDate(mo.getSignContractDate());
-        c.setTotalMoney(mo.getTotalMoney());
-        c.setStartDate(mo.getStartDate());
-        c.setEndDate(mo.getEndDate());
-        c.setType(mo.getType());
-        c.setTax(mo.getTax());
-        c.setQualityDeposit(mo.getQualityDeposit());
+        c.setContractName(mo.getContractName());
         c.setContractNumber(mo.getContractNumber());
-        c.setClientArr(mo.getClientArr());
+        c.setCliId(mo.getCliId());
+        c.setTotalMoney(mo.getTotalMoney());
+        c.setSignContractDate(mo.getSignContractDate());
         c.setNotes(mo.getNotes());
         c.setCreateDate(mo.getCreateDate());
+
+//        c.setEmpId(mo.getEmpId());
+//        c.setStartDate(mo.getStartDate());
+//        c.setEndDate(mo.getEndDate());
+//        c.setType(mo.getType());
+//        c.setTax(mo.getTax());
+//        c.setQualityDeposit(mo.getQualityDeposit());
+//        c.setContractNumber(mo.getContractNumber());
+//        c.setClientArr(mo.getClientArr());
         return c;
     }
 }

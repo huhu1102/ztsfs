@@ -1,8 +1,8 @@
 package com.zt.service;
 
 import com.zt.model.BusinessRuntimeException;
+import com.zt.model.ContractScheduleModel;
 import com.zt.model.ResultObject;
-import com.zt.po.ContractCode;
 import com.zt.po.ContractSchedule;
 
 public interface ContractScheduleService {
@@ -12,13 +12,16 @@ public interface ContractScheduleService {
     */
     ResultObject<ContractSchedule> findAll() throws BusinessRuntimeException;
     /*
-    新增和修改
+    新增和
      */
-    ResultObject<ContractSchedule> add(ContractSchedule contractSchedule)throws BusinessRuntimeException;
+    ResultObject<ContractSchedule> add(ContractScheduleModel contractScheduleModel)throws BusinessRuntimeException;
+    /*
+    修改
+     */
+    ResultObject<ContractSchedule> update(ContractScheduleModel contractScheduleModel)throws BusinessRuntimeException;
     /*
     删除
      */
     ResultObject<ContractSchedule> delete(long id)throws BusinessRuntimeException;
 
-    ResultObject<ContractSchedule> findByContractId(long id);
 }

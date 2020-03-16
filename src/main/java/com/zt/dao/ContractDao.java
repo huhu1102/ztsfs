@@ -56,6 +56,7 @@ public interface ContractDao extends JpaRepository<Contract,Long> {
     Contract findById(long id);
 
     //查找自定义最大的编号
-
+    @Query("select max(c.sequence) from Contract c where c.enabled=true")
+    String maxSequence();
 
 }

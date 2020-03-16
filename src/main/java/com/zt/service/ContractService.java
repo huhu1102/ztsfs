@@ -4,7 +4,6 @@ import com.zt.model.ContractModel;
 import com.zt.model.ResultObject;
 import com.zt.model.ResultPage;
 import com.zt.po.Contract;
-import com.zt.vo.ProductModel;
 
 public interface ContractService {
 
@@ -19,4 +18,6 @@ public interface ContractService {
     ResultObject<Contract> update(ContractModel contractModel);
 
     ResultObject<Contract> delete(long id);
+
+    ResultObject<Object> getBaseData();
 }

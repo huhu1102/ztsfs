@@ -11,7 +11,7 @@ import java.util.List;
 public interface ContractScheduleDao extends JpaRepository<ContractSchedule,Long> {
 
     @Query("SELECT  c from ContractSchedule c where c.enabled=true")
-    ContractSchedule findByContractCodeId();
+    ContractSchedule findByContractCodeId(long contractCodeId);
 
     @Query("select c  from ContractSchedule c where c.enabled=true and c.id=?1")
     ContractSchedule findById(long id);

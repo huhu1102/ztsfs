@@ -1,5 +1,6 @@
 package com.zt.controller;
 
+import com.zt.model.ContractFileModel;
 import com.zt.model.ResultObject;
 import com.zt.model.ResultPage;
 import com.zt.po.ContractFile;
@@ -26,8 +27,16 @@ public class ContractFileController {
     新增
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ResultObject<ContractFile> add(ContractFile contractFile) {
-        return contractFileService.add(contractFile);
+    public ResultObject<ContractFile> add(ContractFileModel contractFileModel) {
+        return contractFileService.add(contractFileModel);
+    }
+
+    /*
+    修改
+     */
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ResultObject<ContractFile> update(ContractFileModel contractFileModel) {
+        return contractFileService.update(contractFileModel);
     }
 
     /*

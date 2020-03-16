@@ -44,7 +44,6 @@ public class Commad<T> {
 	 * 未找到申请表记录
 	 * 
 	 * */
-	
 	public static final  String VEHICLEASKED_NOT_FIND="VEHICLEASKEDNOTFIND";
 	
 	/*

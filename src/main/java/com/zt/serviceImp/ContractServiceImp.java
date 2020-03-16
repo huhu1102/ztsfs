@@ -3,7 +3,6 @@ package com.zt.serviceImp;
 import com.zt.common.Message;
 import com.zt.common.MessageUtil;
 import com.zt.common.Utils;
-
 import com.zt.dao.ClientDao;
 import com.zt.dao.ContractDao;
 import com.zt.dao.EmployeeDao;
@@ -11,20 +10,16 @@ import com.zt.dao.UploadFileDao;
 import com.zt.model.*;
 import com.zt.po.Contract;
 import com.zt.po.Employee;
-import com.zt.po.UploadFile;
 import com.zt.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
-
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 
 @Service
@@ -97,16 +92,8 @@ public class ContractServiceImp implements ContractService {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();
         Contract contract = mo.v2p(contractModel);
-        List<UploadFile> uploadFileList = new ArrayList<>();
-        String uploadIds = contractModel.getUploadIds();
-        String[] split = uploadIds.trim().split(",");
-        if(split.length>0){
-            for (int i = 0,n = split.length; i < n; i++) {
-                UploadFile u = uploadFileDao.findById(Long.parseLong(split[i]));
-                uploadFileList.add(u);
-            }
-        }
         contract.setEnabled(true);
+        contract.setSequence(createSequence());
         contract.setCreateDate(new Date());
         contract.setCliente(clientDao.findById(contract.getCliId()));
         Employee employee = employeeDao.findById(contract.getEmpId());
@@ -139,15 +126,6 @@ public class ContractServiceImp implements ContractService {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();
         Contract contract = mo.v2p(contractModel);
-        List<UploadFile> uploadFileList = new ArrayList<>();
-        String uploadIds = contractModel.getUploadIds();
-        String[] split = uploadIds.trim().split(",");
-        if(split.length>0){
-            for (int i = 0,n = split.length; i < n; i++) {
-                UploadFile u = uploadFileDao.findById(Long.parseLong(split[i]));
-                uploadFileList.add(u);
-            }
-        }
         contract.setEnabled(true);
         contract.setCreateDate(new Date());
         contract.setCliente(clientDao.findById(contract.getCliId()));
@@ -200,5 +178,35 @@ public class ContractServiceImp implements ContractService {
             ro.setMsg("删除失败");
         }
         return ro;
+    }
+    //初始化员工信息
+    @Override
+    public ResultObject<Object> getBaseData() {
+        ResultObject<Object> ro=new ResultObject<>();
+        Map<String, Object> map=new HashMap<>();
+        List<Employee> employeeList = employeeDao.findAll();
+        if (employeeList==null) {
+            ro.setSuccess(false);
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }else {
+            map.put("employee", employeeList);
+            ro.setRoot(map);
+            ro.setSuccess(true);
+        }
+        return ro;
+    }
+
+    //自动生成合同序号
+    public String createSequence(){
+        String num = "C00001";
+        //查询当前合同表中最大的序号
+        String maxSequence = contractDao.maxSequence();
+        StringBuilder sb = new StringBuilder();
+        if(maxSequence!=null){
+            String sub = maxSequence.substring(1);
+            sb.append("C").append(String.format("%05d",Integer.parseInt(sub)+1));
+            num = sb.toString();
+        }
+        return num;
     }
 }

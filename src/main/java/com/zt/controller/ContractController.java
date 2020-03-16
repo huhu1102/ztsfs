@@ -50,4 +50,16 @@ public class ContractController {
         return contractService.delete(id);
     }
 
+
+    /**
+     * @param
+     * @return
+     *  查询钱前台页面在员工修改页面需要的数据
+     */
+    @RequestMapping(value="/basicdata",method=RequestMethod.GET)
+    public ResultObject<Object> basicdata(){
+
+        return contractService.getBaseData();
+    }
+
 }

@@ -111,11 +111,6 @@ public class Contract extends BasePo{
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
-    //附件名字
-    private String uploadName;
-    //附件url
-    private String imageUrl;
-
 
     public long getId() {
         return id;
@@ -289,21 +284,6 @@ public class Contract extends BasePo{
         this.cliId = cliId;
     }
 
-    public String getUploadName() {
-        return uploadName;
-    }
-
-    public void setUploadName(String uploadName) {
-        this.uploadName = uploadName;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getNotes() {
         return notes;
