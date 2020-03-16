@@ -3,19 +3,24 @@ package com.zt.model;
 import com.zt.po.BasePo;
 import com.zt.po.ContractSchedule;
 
+import java.util.Date;
+
 public class ContractScheduleModel extends BasePo{
 
     private static final long serialVersionUID = 1L;
     //合同进度Id
     private long contractScheduleId;
     //员工Id
-    private long operatorId;
+    private long empId;
     //备注
     private String note;
     //合同ContractCode id
     private long contractCodeId;
     //状态
-    private Integer statue;
+    private Integer state;
+
+    //创建时间
+    private Date createDate;
 
     public long getContractScheduleId() {
         return contractScheduleId;
@@ -25,13 +30,6 @@ public class ContractScheduleModel extends BasePo{
         this.contractScheduleId = contractScheduleId;
     }
 
-    public long getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(long operatorId) {
-        this.operatorId = operatorId;
-    }
 
     public String getNote() {
         return note;
@@ -49,12 +47,28 @@ public class ContractScheduleModel extends BasePo{
         this.contractCodeId = contractCodeId;
     }
 
-    public Integer getStatue() {
-        return statue;
+    public long getEmpId() {
+        return empId;
     }
 
-    public void setStatue(Integer statue) {
-        this.statue = statue;
+    public void setEmpId(long empId) {
+        this.empId = empId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public ContractSchedule v2p(ContractScheduleModel model){
@@ -64,8 +78,8 @@ public class ContractScheduleModel extends BasePo{
         }
         con.setContractCodeId(model.getContractCodeId());
         con.setNote(model.getNote());
-        con.setStatue(model.getStatue());
-        con.setOperatorId(model.getOperatorId());
+        con.setStatue(model.getState());
+        con.setOperatorId(model.getEmpId());
         return con;
     }
 
