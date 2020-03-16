@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -177,6 +179,23 @@ public class ContractServiceImp implements ContractService {
         }
         return ro;
     }
+    //初始化员工信息
+    @Override
+    public ResultObject<Object> getBaseData() {
+        ResultObject<Object> ro=new ResultObject<>();
+        Map<String, Object> map=new HashMap<>();
+        List<Employee> employeeList = employeeDao.findAll();
+        if (employeeList==null) {
+            ro.setSuccess(false);
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }else {
+            map.put("employee", employeeList);
+            ro.setRoot(map);
+            ro.setSuccess(true);
+        }
+        return ro;
+    }
+
     //自动生成合同序号
     public String createSequence(){
         String num = "C00001";

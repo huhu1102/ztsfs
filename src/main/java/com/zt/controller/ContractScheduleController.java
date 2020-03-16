@@ -34,7 +34,7 @@ public class ContractScheduleController {
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public ResultObject<ContractSchedule> update(ContractScheduleModel contractScheduleModel) throws BusinessRuntimeException {
-        return contractScheduleService.update(contractScheduleModel);
+        return contractScheduleService.update(contractScheduleModel );
     }
     /*
     删除
