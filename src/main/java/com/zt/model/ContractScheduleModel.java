@@ -3,8 +3,6 @@ package com.zt.model;
 import com.zt.po.BasePo;
 import com.zt.po.ContractSchedule;
 
-import java.util.Date;
-
 public class ContractScheduleModel extends BasePo{
 
     private static final long serialVersionUID = 1L;
@@ -18,9 +16,6 @@ public class ContractScheduleModel extends BasePo{
     private long contractCodeId;
     //状态
     private Integer state;
-
-    //创建时间
-    private Date createDate;
 
     public long getContractScheduleId() {
         return contractScheduleId;
@@ -61,14 +56,6 @@ public class ContractScheduleModel extends BasePo{
 
     public void setState(Integer state) {
         this.state = state;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
     }
 
     public ContractSchedule v2p(ContractScheduleModel model){

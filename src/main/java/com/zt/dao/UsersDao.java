@@ -4,19 +4,17 @@
  
 package com.zt.dao;
 
-import java.util.List;
-import java.util.Set;
-
+import com.zt.po.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import com.zt.po.Employee;
-import com.zt.po.Users;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author whl
@@ -24,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface UsersDao extends JpaRepository<Users, Long> {
 	/**
-	 * @param userName
+	 * @param name
 	 * @return
 	 */
 	@Query("from Users u where u.username=:name")  
@@ -66,15 +64,15 @@ public interface UsersDao extends JpaRepository<Users, Long> {
 	boolean updateUser(long id);
 
 	/**
-	 * @param emp
+	 * @param empId
 	 * @return
 	 */
-    @Query("select u.id from Users u where   u.empId=?1 ")
+    @Query("select u.id from Users u where  u.enabled=true and u.empId=?1 ")
 	List<Long> finduserIdbyEmpId(long empId);
 
     Users findById(long id);
 
-	@Query("select u from Users u where  u.empId=?1 ")
+	@Query("select u from Users u where  u.enabled=true and u.empId=?1 ")
 	Users findByEmpId(long empId);
 
 }

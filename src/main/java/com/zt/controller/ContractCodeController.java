@@ -23,7 +23,7 @@ public class ContractCodeController {
     }
 
     /*
-    新增修改`
+    新增
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ResultObject<ContractCode> add(ContractCode contractCode) throws BusinessRuntimeException {

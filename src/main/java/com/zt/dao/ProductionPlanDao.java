@@ -47,8 +47,8 @@ public interface ProductionPlanDao extends JpaRepository<ProductionPlan, Long>{
             "\tINNER JOIN zt_employee e ON e.id = detail.employeeId\n" +
             "WHERE detail.enabled = TRUE \n" +
             "AND\n" +
-            "IF\n" +
-            "\t(:statused IS NOT NULL, detail.`status` = :statused, 1 = 1 ) \n" +
+            "IF(:statused IS NOT NULL, detail.`status` = :statused, 1 = 1 ) \n" +
+            "AND IF(:contractStatus IS NOT NULL, pd.`contractStatus` = :contractStatus, 1 = 1 ) \n" +
             "AND\n" +
             "IF\n" +
             "\t( ISNULL(:clientName ) || LENGTH( trim(:clientName ) ), c.NAME = :clientName, 1 = 1 ) \n" +
@@ -82,6 +82,7 @@ public interface ProductionPlanDao extends JpaRepository<ProductionPlan, Long>{
                                     @Param("endDate") String endDate,
                                     @Param("startDate") String startDate,
                                     @Param("statused") Integer statused,
+                                    @Param("contractStatus")Integer contractStatus,
                                     @Param("clientName") String clientName,
                                     Pageable pageable);
 //    @Query(value = "SELECT DISTINCT pp.* FROM zt_productionplan pp  LEFT JOIN zt_productionplandetails  dt on  dt.productionPlan_id=pp.id  LEFT JOIN zt_salesplan  s on s.id=dt.salesPlan_id WHERE pp.enabled = TRUE and  s.`status`=:statused ORDER BY  pp.createDate DESC",nativeQuery = true)

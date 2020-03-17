@@ -14,9 +14,16 @@ public class ProductionPlanModel extends BasePo {
     private String productionPlanNo;
     //销售计划详情
     private String productionPlanDetails;
+    //合同状态
+    private Integer contractStatus;
+
     private String notes;
     //时间
     private Date createDate;
+    /*
+	完成合同中的数量
+	 */
+    private double contractNo;
 
     public long getId() {
         return id;
@@ -50,6 +57,29 @@ public class ProductionPlanModel extends BasePo {
         this.createDate = createDate;
     }
 
+    public Integer getContractStatus() {
+        return contractStatus;
+    }
+
+    public void setContractStatus(Integer contractStatus) {
+        this.contractStatus = contractStatus;
+    }
+
+    public double getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(double contractNo) {
+        this.contractNo = contractNo;
+    }
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public ProductionPlan v1p(ProductionPlanModel mo){
         ProductionPlan marketingPlan = new ProductionPlan();
         if (mo.getId()!=0){
@@ -59,14 +89,18 @@ public class ProductionPlanModel extends BasePo {
         marketingPlan.setCreateDate(mo.getCreateDate());
         marketingPlan.setPlanNo(mo.getProductionPlanNo());
         marketingPlan.setNotes (mo.getNotes());
+        if(mo.getContractStatus()==0||mo.getContractStatus()==null){
+            marketingPlan.setContractStatus(1);
+        }else {
+            marketingPlan.setContractStatus(mo.getContractStatus());
+        }
+        if(mo.getContractNo()==0){
+            marketingPlan.setContractNo(0.0);
+        }else{
+            marketingPlan.setContractNo(mo.getContractNo());
+        }
         return marketingPlan;
     }
 
-    public String getNotes() {
-        return notes;
-    }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 }
