@@ -33,9 +33,8 @@ public class ProductionPlanController {
                                                  String endDate,
                                                  String startDate,
                                                  String clientName,
-                                                 Integer contractStatus,
                                                  Integer status) {
-        return productionPlanService.findByPage(page,size,productName, empName,endDate, startDate, status,contractStatus,clientName );
+        return productionPlanService.findByPage(page,size,productName, empName,endDate, startDate, status,clientName );
     }
 
     /**

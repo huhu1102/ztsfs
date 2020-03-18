@@ -48,7 +48,6 @@ public interface ProductionPlanDao extends JpaRepository<ProductionPlan, Long>{
             "WHERE detail.enabled = TRUE \n" +
             "AND\n" +
             "IF(:statused IS NOT NULL, detail.`status` = :statused, 1 = 1 ) \n" +
-            "AND IF(:contractStatus IS NOT NULL, pd.`contractStatus` = :contractStatus, 1 = 1 ) \n" +
             "AND\n" +
             "IF\n" +
             "\t( ISNULL(:clientName ) || LENGTH( trim(:clientName ) ), c.NAME = :clientName, 1 = 1 ) \n" +
@@ -76,17 +75,13 @@ public interface ProductionPlanDao extends JpaRepository<ProductionPlan, Long>{
             "\t) \n" +
             "GROUP BY\n" +
             "\tdetail.productionPlan_id  ORDER BY pd.createDate DESC",nativeQuery = true)
-//    @Query(value = "SELECT DISTINCT pp.*,s.id,s.clientName,s.orderNo,s.orderStr,s.`status` FROM zt_productionplan pp  LEFT JOIN zt_productionplandetails  dt on  dt.productionPlan_id=pp.id  LEFT JOIN zt_salesplan  s on s.id=dt.salesPlan_id WHERE pp.enabled = TRUE and  s.`status`=1",nativeQuery = true)
 	Page<ProductionPlan> findSearch(@Param("productName") String productName,
                                     @Param("empName") String empName,
                                     @Param("endDate") String endDate,
                                     @Param("startDate") String startDate,
                                     @Param("statused") Integer statused,
-                                    @Param("contractStatus")Integer contractStatus,
                                     @Param("clientName") String clientName,
                                     Pageable pageable);
-//    @Query(value = "SELECT DISTINCT pp.* FROM zt_productionplan pp  LEFT JOIN zt_productionplandetails  dt on  dt.productionPlan_id=pp.id  LEFT JOIN zt_salesplan  s on s.id=dt.salesPlan_id WHERE pp.enabled = TRUE and  s.`status`=:statused ORDER BY  pp.createDate DESC",nativeQuery = true)
-//    Page<ProductionPlan> findSearch(String productName, String empName, String endDate, String startDate, @Param("statused") Integer statused, String clientName, Pageable pageable);
     /**
     查询当天是否有单号
      */
@@ -105,5 +100,6 @@ public interface ProductionPlanDao extends JpaRepository<ProductionPlan, Long>{
 
     @Query("select count(p.status) from ProductionPlan p where p.enabled=true group by p.status")
     Set<ProductionPlan> findStatus();
+
 
 }

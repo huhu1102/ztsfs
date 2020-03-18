@@ -1,7 +1,5 @@
 package com.zt.po;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +35,17 @@ public class ProductionPlanDetails extends BasePo{
     //发货记录
     private String shippingStr;
 
+	/*
+	添加合同的状态
+	1.没有合同
+	2.合同完结
+	3.有部分合同
+ */
+	private Integer contractStatus;
+	/*
+	完成合同中的数量
+	 */
+	private double contractNo;
 	//单号
 	@Column(columnDefinition ="varchar(255)COMMENT  '单号'" )
 	private String planNo;
@@ -325,5 +334,21 @@ public class ProductionPlanDetails extends BasePo{
 
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
+	}
+
+	public Integer getContractStatus() {
+		return contractStatus;
+	}
+
+	public void setContractStatus(Integer contractStatus) {
+		this.contractStatus = contractStatus;
+	}
+
+	public double getContractNo() {
+		return contractNo;
+	}
+
+	public void setContractNo(double contractNo) {
+		this.contractNo = contractNo;
 	}
 }
