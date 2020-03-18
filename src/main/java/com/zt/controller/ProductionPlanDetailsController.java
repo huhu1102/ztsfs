@@ -1,18 +1,17 @@
 package com.zt.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.zt.model.ProductionPlanDetailsModel;
-import com.zt.po.ProductionPlan;
+import com.zt.model.ResultObject;
+import com.zt.model.ResultPage;
 import com.zt.po.ProductionPlanDetails;
 import com.zt.service.ProductionPlanDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.zt.model.ResultObject;
-import com.zt.model.ResultPage;
-
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author wl
@@ -37,6 +36,16 @@ public class ProductionPlanDetailsController {
 														String status,
 														int page, int size) {
 		return productionPlanDetailsService.findSearch(page,size,  productName, empName,endDate, startDate,clientName,status);
+	}
+	//查询合同状态为1和3的
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public ResultObject<ProductionPlanDetails> find(String productName,
+											 String empName,
+											 String endDate,
+											 String startDate,
+											 String clientName,
+											 Integer status) {
+		return productionPlanDetailsService.find(productName, empName,endDate, startDate, status,clientName);
 	}
 	/*
 	根据销售计划Id查询

@@ -63,10 +63,10 @@ public class ProductionPlanServiceImp implements ProductionPlanService {
        分页查询所有
      */
     @Override
-    public ResultPage<ProductionPlan> findByPage(int page, int size, String productName, String empName, String endDate, String startDate, Integer status, Integer contractStatus,String clientName) throws BusinessRuntimeException {
+    public ResultPage<ProductionPlan> findByPage(int page, int size, String productName, String empName, String endDate, String startDate, Integer status,String clientName) throws BusinessRuntimeException {
         ResultPage<ProductionPlan> ro = new ResultPage<>();
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<ProductionPlan> pages = productionPlanDao.findSearch(productName, empName,endDate, startDate, status, contractStatus,clientName, pageable);
+        Page<ProductionPlan> pages = productionPlanDao.findSearch(productName, empName,endDate, startDate, status, clientName, pageable);
 //        Page<ProductionPlan> pages = productionPlanDao.findSearch(status,  pageable);
         List<ProductionPlan> plan=pages.getContent();
 //        if(plan!=null&&plan.size()>0&&status!=null){
@@ -99,6 +99,7 @@ public class ProductionPlanServiceImp implements ProductionPlanService {
 
         return ro;
     }
+
 
     @Override
     public ResultPage<ProductionPlanDetails> findByNewPlan(int page, int size, String productName, String empName, String endDate, String startDate, String clientName) {
@@ -458,4 +459,6 @@ public class ProductionPlanServiceImp implements ProductionPlanService {
         return ro;
 
     }
+
+
 }

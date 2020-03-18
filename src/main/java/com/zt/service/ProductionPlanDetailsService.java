@@ -43,4 +43,6 @@ public interface ProductionPlanDetailsService {
     ResultPage<ProductionPlanDetails> findForOrder(int page, int size, long clientId);
 
     Long findbyMangeId(long manageId);
+
+    ResultObject<ProductionPlanDetails> find(String productName, String empName, String endDate, String startDate, Integer status, String clientName);
 }

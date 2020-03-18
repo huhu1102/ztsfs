@@ -15,13 +15,15 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wl
@@ -58,6 +60,23 @@ public class ProductionPlanDetailsServiceImp implements ProductionPlanDetailsSer
 
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+    /*
+    根据合同状态查所有
+     */
+    @Override
+    public ResultObject<ProductionPlanDetails> find(String productName, String empName, String endDate, String startDate, Integer status, String clientName) {
+        ResultObject<ProductionPlanDetails> ro = new ResultObject<>();
+        List<ProductionPlanDetails> pages = productionPlanDetailsDao.findByCon(productName,empName,endDate,startDate,clientName,status);
+        if (pages!=null) {
+            ro.setData(pages);
+            ro.setSuccess(true);
+        } else {
+            ro.setSuccess(false);
+            throw new BusinessRuntimeException(ResultCode.UNKNOWN_ERROR);
+        }
+
+        return ro;
+    }
 
     /*
      * 分页模糊查询
@@ -133,6 +152,7 @@ public class ProductionPlanDetailsServiceImp implements ProductionPlanDetailsSer
          }
         return managerId;
     }
+
 
     @Override
     public ResultObject<ProductionPlanDetails> findCount() {

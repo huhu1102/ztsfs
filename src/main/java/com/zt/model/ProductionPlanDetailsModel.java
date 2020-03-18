@@ -3,11 +3,9 @@ package com.zt.model;
 import com.zt.po.BasePo;
 import com.zt.po.ProductionPlanDetails;
 import com.zt.po.ProductionPlanSerialNumber;
-import com.zt.po.SalesPlan;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +40,17 @@ public class ProductionPlanDetailsModel extends BasePo {
     //状态
     private Integer status;
 
+    /*
+    添加合同的状态
+    1.没有合同
+    2.合同完结
+    3.有部分合同
+ */
+    private Integer contractStatus;
+    /*
+    完成合同中的数量
+     */
+    private double contractNo;
     private Integer checkStatus;
     private Integer expectLevel;
     /**
@@ -160,6 +169,22 @@ public class ProductionPlanDetailsModel extends BasePo {
         this.productId = productId;
     }
 
+    public Integer getContractStatus() {
+        return contractStatus;
+    }
+
+    public void setContractStatus(Integer contractStatus) {
+        this.contractStatus = contractStatus;
+    }
+
+    public double getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(double contractNo) {
+        this.contractNo = contractNo;
+    }
+
     public ProductionPlanDetails v2p(ProductionPlanDetailsModel mo) {
         ProductionPlanDetails ppdetail = new ProductionPlanDetails();
         if (mo.getId() != 0) {
@@ -167,6 +192,16 @@ public class ProductionPlanDetailsModel extends BasePo {
         }
         if (mo.getMark() != null) {
             ppdetail.setMark(mo.getMark());
+        }
+        if(mo.getContractStatus()==0||mo.getContractStatus()==null){
+            ppdetail.setContractStatus(1);
+        }else {
+            ppdetail.setContractStatus(mo.getContractStatus());
+        }
+        if(mo.getContractNo()==0){
+            ppdetail.setContractNo(0.0);
+        }else{
+            ppdetail.setContractNo(mo.getContractNo());
         }
         List<ProductionPlanSerialNumber> serialNumberList = new ArrayList<>();
         JSONArray arr = JSONArray.fromObject(mo.getProductionPlanSerialNumber());
