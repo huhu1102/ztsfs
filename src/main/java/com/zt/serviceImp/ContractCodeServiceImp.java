@@ -42,7 +42,7 @@ public class ContractCodeServiceImp implements ContractCodeService {
     }
 
     /**
-     * 新增和修改
+     * 新增
      * @param contractCode
      * @return
      * @throws BusinessRuntimeException
@@ -55,14 +55,20 @@ public class ContractCodeServiceImp implements ContractCodeService {
         }
         contractCode.setCode( PinyinUtils.getPingYin(PinyinUtils.cleanChar(contractCode.getCodeName())));
         contractCode.setEnabled(true);
-        contractCode = contractCodeDao.saveAndFlush(contractCode);
-        if (contractCode!=null&&contractCode.getId()>0) {
-            ro.setSuccess(true);
-            ro.setMsg("保存成功！");
-        }else {
+        ContractCode byName = contractCodeDao.findByName(contractCode.getCodeName());
+        if(byName!=null){
             ro.setSuccess(false);
-            ro.setMsg("操作失败");
-            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+            ro.setMsg("流程名称重复,请确认后重新添加");
+        }else{
+            contractCode = contractCodeDao.saveAndFlush(contractCode);
+            if (contractCode!=null&&contractCode.getId()>0) {
+                ro.setSuccess(true);
+                ro.setMsg("保存成功！");
+            }else {
+                ro.setSuccess(false);
+                ro.setMsg("操作失败");
+                throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+            }
         }
         return ro;
     }

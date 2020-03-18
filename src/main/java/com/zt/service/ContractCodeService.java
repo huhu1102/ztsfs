@@ -11,7 +11,7 @@ public interface ContractCodeService {
     */
     ResultObject<ContractCode> findAllcodes() throws BusinessRuntimeException;
     /*
-    新增和修改
+    新增
      */
     ResultObject<ContractCode> add(ContractCode contractCode)throws BusinessRuntimeException;
     /*

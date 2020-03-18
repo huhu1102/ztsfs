@@ -14,7 +14,7 @@ import com.zt.po.ProductionPlanDetails;
 public interface ProductionPlanService {
 	/*
 	 */
-	 ResultPage<ProductionPlan> findByPage(int page, int size, String productName, String empName, String endDate, String startDate, Integer status, String clientName)throws BusinessRuntimeException;
+	 ResultPage<ProductionPlan> findByPage(int page, int size, String productName, String empName, String endDate, String startDate, Integer status,Integer contractStatus,String clientName)throws BusinessRuntimeException;
 
 	/*
 	 * 信息的删除

@@ -7,7 +7,6 @@ import com.zt.po.ProductionPlan;
 import com.zt.po.ProductionPlanDetails;
 import com.zt.service.ProductionPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +33,9 @@ public class ProductionPlanController {
                                                  String endDate,
                                                  String startDate,
                                                  String clientName,
+                                                 Integer contractStatus,
                                                  Integer status) {
-        return productionPlanService.findByPage(page,size,productName, empName,endDate, startDate, status,clientName );
+        return productionPlanService.findByPage(page,size,productName, empName,endDate, startDate, status,contractStatus,clientName );
     }
 
     /**

@@ -8,8 +8,6 @@ import com.zt.dao.*;
 import com.zt.model.*;
 import com.zt.po.*;
 import com.zt.service.ProductionPlanService;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author wl
@@ -68,10 +63,10 @@ public class ProductionPlanServiceImp implements ProductionPlanService {
        分页查询所有
      */
     @Override
-    public ResultPage<ProductionPlan> findByPage(int page, int size, String productName, String empName, String endDate, String startDate, Integer status, String clientName) throws BusinessRuntimeException {
+    public ResultPage<ProductionPlan> findByPage(int page, int size, String productName, String empName, String endDate, String startDate, Integer status, Integer contractStatus,String clientName) throws BusinessRuntimeException {
         ResultPage<ProductionPlan> ro = new ResultPage<>();
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<ProductionPlan> pages = productionPlanDao.findSearch(productName, empName,endDate, startDate, status, clientName, pageable);
+        Page<ProductionPlan> pages = productionPlanDao.findSearch(productName, empName,endDate, startDate, status, contractStatus,clientName, pageable);
 //        Page<ProductionPlan> pages = productionPlanDao.findSearch(status,  pageable);
         List<ProductionPlan> plan=pages.getContent();
 //        if(plan!=null&&plan.size()>0&&status!=null){

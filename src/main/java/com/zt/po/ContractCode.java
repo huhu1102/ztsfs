@@ -18,7 +18,6 @@ public class ContractCode extends BasePo{
     private long id;
     @Column(columnDefinition ="varchar(255)  COMMENT '流程名称.'" )
     private String  codeName;
-
     private String code;
     @Column(columnDefinition ="TINYINT(1)  COMMENT '是否可用'" )
     private boolean enabled;

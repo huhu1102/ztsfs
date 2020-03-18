@@ -15,4 +15,7 @@ public interface ContractCodeDao extends JpaRepository<ContractCode,Long> {
 
     @Query("select c from ContractCode c where c.enabled=true and c.id=?1")
     ContractCode findById(long id);
+
+    @Query("select c from ContractCode c where c.codeName=?1 and c.enabled=true")
+    ContractCode findByName(String codeName);
 }

@@ -1,9 +1,7 @@
 package com.zt.po;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author wl
@@ -34,12 +32,23 @@ public class ProductionPlan extends BasePo{
 	private String planNo;
 
 //	/**
-//	 * 该生产计划的生产状态
-//	 * 1-未开始生产，新建
-//	 * 2--生产中
-//	 * 3--生产完成
-//	 */
-//	private Integer produceStatus;
+////	 * 该生产计划的生产状态
+////	 * 1-未开始生产，新建
+////	 * 2--生产中
+////	 * 3--生产完成
+////	 */
+////	private Integer produceStatus;
+	/*
+	添加合同的状态
+	1.没有合同
+	2.合同完结
+	3.有部分合同
+	 */
+	private Integer contractStatus;
+	/*
+	完成合同中的数量
+	 */
+	private double contractNo;
 	//备注(整单
 	@Column(columnDefinition ="varchar(255)COMMENT  '备注'" )
 	private String notes;
@@ -83,6 +92,22 @@ public class ProductionPlan extends BasePo{
 //		this.details = details;
 //	}
 
+
+	public double getContractNo() {
+		return contractNo;
+	}
+
+	public void setContractNo(double contractNo) {
+		this.contractNo = contractNo;
+	}
+
+	public Integer getContractStatus() {
+		return contractStatus;
+	}
+
+	public void setContractStatus(Integer contractStatus) {
+		this.contractStatus = contractStatus;
+	}
 
 	public String getPlanNo() {
 		return planNo;
