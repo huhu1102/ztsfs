@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Set;
@@ -60,6 +59,10 @@ public interface SalesOrderDao extends JpaRepository<SalesOrder, Long> {
 
     @Query("select count(s.orderStatus) from SalesOrder s where s.enabled=true group by s.orderStatus")
     Set<SalesOrder> findStatus();
+
+
+    @Query("select s.orderNo,s.cliente from SalesOrder s where s.enabled=true and s.hasContract=false order by s.cliId asc,s.createDate desc")
+    List<SalesOrder> findAllOders();
 
 
 }

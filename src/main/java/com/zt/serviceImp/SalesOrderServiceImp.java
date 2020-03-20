@@ -338,6 +338,25 @@ public class SalesOrderServiceImp implements SalesOrderService {
 
         return ro;
     }
+    /*
+    根据未归档合同查询所有订单
+    */
+    @Override
+    public ResultObject<SalesOrder> findAllOders() throws BusinessRuntimeException {
+        ResultObject<SalesOrder> ro = new ResultObject<>();
+        List<SalesOrder> allOders = salesOrderDao.findAllOders();
+        if(allOders!=null){
+            ro.setData(allOders);
+            ro.setSuccess(true);
+            ro.setMsg("查询成功");
+        }else{
+            ro.setSuccess(false);
+            ro.setMsg("查询失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
+
+        return ro;
+    }
 
     public void changeSales(SalesPlan salesPlan) {
         int result = 0;
