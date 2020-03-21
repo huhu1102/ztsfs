@@ -2,6 +2,7 @@ package com.zt.serviceImp;
 
 import com.zt.common.Message;
 import com.zt.common.MessageUtil;
+import com.zt.common.UsersUtils;
 import com.zt.common.Utils;
 import com.zt.dao.*;
 import com.zt.model.*;
@@ -17,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +48,8 @@ public class SalesOrderServiceImp implements SalesOrderService {
     Message message;
     @Autowired
     MessageUtil messageUtil;
+    @Autowired
+    MessageUtil msgUtil;
 
     /*
     新建订单
@@ -58,42 +60,88 @@ public class SalesOrderServiceImp implements SalesOrderService {
         SalesOrder salesOrder = new SalesOrder();
         String planNo = salesOrderDao.findMaxPlanNo();
         salesOrder.setOrderNo(Utils.newPlanNo(planNo, "Z"));
+        salesOrder.setNotes(note);
+        salesOrder.setEnabled(true);
+        salesOrder.setCreateDate(new Date());
+        ro = addDetails(orderDetails,salesOrder,"新建");
+        return ro;
+    }
+
+
+    /*
+    修改订单
+     */
+    @Override
+    public ResultObject<SalesOrder> updateNew(long id, String orderDetails, String note) throws BusinessRuntimeException {
+        ResultObject<SalesOrder> ro = new ResultObject<>();
+        SalesOrder salesOrder = salesOrderDao.findById(id);
+        //删除旧订单详情的所有关系以及数据
+        List<SalesOrderDetails> salesOrderDetailsList = salesOrder.getSalesOrderDetails();
+        boolean removeAll = salesOrderDetailsList.removeAll(salesOrderDetailsList);
+        if(removeAll){
+            //新建订单详情
+            ro = addDetails(orderDetails,salesOrder,"修改");
+        }
+        return ro;
+    }
+
+
+    private ResultObject<SalesOrder> addDetails(String orderDetails, SalesOrder salesOrder,String orderStr){
+        ResultObject<SalesOrder> ro = new ResultObject<>();
         OrderDetailsModel o = new OrderDetailsModel();
         List<SalesOrderDetails> salesOrderDetailsList = new ArrayList<>();
         JSONArray array = JSONArray.fromObject(orderDetails);
         ProductionPlanDetails productionPlanDetails ;
         ProductionPlanDetails productionPlanDetailsfirst = new ProductionPlanDetails();
-        if(array.size()>0){
-
+        if(array.size()>0) {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject object = array.getJSONObject(i);
-
                 OrderDetailsModel orderDetailsModel = o.j2m(object);
                 long productDetailsId = orderDetailsModel.getProductDetailsId();
                 SalesOrderDetails salesOrderDetails = o.v2p(orderDetailsModel);
                 salesOrderDetails.setCreateDate(new Date());
                 salesOrderDetails.setEnabled(true);
                 productionPlanDetails = productionPlanDetailsDao.findById(productDetailsId);
-                if(i==0){
-                 productionPlanDetailsfirst = productionPlanDetailsDao.findById(productDetailsId);
+                if (i == 0) {
+                    productionPlanDetailsfirst = productionPlanDetailsDao.findById(productDetailsId);
                 }
-                if(productionPlanDetails!=null) {
+                if (productionPlanDetails != null) {
                     salesOrderDetails.setProductionPlanDetails(productionPlanDetails);
                 }
+                salesOrderDetails.setSalesOrder(salesOrder);
+                salesOrderDetailsList.add(salesOrderDetails);
             }
-                if(productionPlanDetailsfirst.getSalesPlan()!=null) {
-                    Client client = productionPlanDetailsfirst.getSalesPlan().getClient();
-                    if (client.getParentClientId() != 0) {
-                        salesOrder.setCliId(client.getParentClientId());
-                        salesOrder.setCliente(client.getParent());
-                    } else {
-                        salesOrder.setCliId(client.getId());
-                        salesOrder.setCliente(client);
-                    }
+            if (productionPlanDetailsfirst.getSalesPlan() != null) {
+                Client client = productionPlanDetailsfirst.getSalesPlan().getClient();
+                if (client.getParentClientId() != 0) {
+                    salesOrder.setCliId(client.getParentClientId());
+                    salesOrder.setCliente(client.getParent());
+                } else {
+                    salesOrder.setCliId(client.getId());
+                    salesOrder.setCliente(client);
                 }
+            }
+            salesOrder.setSalesOrderDetails(salesOrderDetailsList);
+            salesOrder = salesOrderDao.saveAndFlush(salesOrder);
+            if (salesOrder != null) {
+                ro.setSuccess(true);
+                ro.setMsg(orderStr + "成功");
+                //发送消息
+                String userName = UsersUtils.getCurrentHr().getEmpName();
+                StringBuilder title = new StringBuilder();
+                title.append(userName);
+                title.append(orderStr+"了一个销售订单");
+                int re = msgUtil.sendMsg(title.toString(), "", "SalesOrder", salesOrder.getId(), message.UserIds());
+            } else {
+                ro.setSuccess(false);
+                ro.setMsg(orderStr + "失败");
+                throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+            }
+
         }
         return ro;
     }
+
 
 
 

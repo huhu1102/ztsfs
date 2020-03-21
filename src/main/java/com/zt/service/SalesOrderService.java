@@ -37,4 +37,6 @@ public interface SalesOrderService {
     ResultObject<SalesOrder> findAllOders()throws BusinessRuntimeException;
 
 	ResultObject<SalesOrder> addNew(String orderDetails,String note)throws BusinessRuntimeException;
+
+	ResultObject<SalesOrder> updateNew(long id, String orderDetails, String note)throws BusinessRuntimeException;
 }

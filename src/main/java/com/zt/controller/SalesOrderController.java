@@ -33,6 +33,14 @@ public class SalesOrderController {
 	}
 
 	/*
+	修改订单
+	 */
+	@RequestMapping(value="/updatenew",method = RequestMethod.POST)
+	public ResultObject<SalesOrder> updateNew(long id,String orderDetails,String note) throws Exception{
+		return salesOrderService.updateNew(id,orderDetails,note);
+	}
+
+	/*
 	新建
 	 */
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
