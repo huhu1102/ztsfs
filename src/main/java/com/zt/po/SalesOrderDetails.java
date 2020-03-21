@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author wl
@@ -26,7 +25,7 @@ public class SalesOrderDetails extends BasePo{
 	
 	//产品数量
 	@Column(columnDefinition ="float(20,4)  COMMENT  '产品数量'" )
-	private float productNo;
+	private double productNo;
 	
 	//不含税单价
 	@Column(columnDefinition ="varchar(255)COMMENT  '不含税单价'" )
@@ -41,12 +40,14 @@ public class SalesOrderDetails extends BasePo{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
-	//关联生产计划
+	//关联生产计划详情
 //	@ManyToMany(cascade = CascadeType.ALL)
 //	@JoinTable(name="zt_salesorderdetails_productionplandetails",joinColumns={@JoinColumn(name="s_id")}
 //			,inverseJoinColumns={@JoinColumn(name="p_id")})
 	@ManyToOne
 	private ProductionPlanDetails productionPlanDetails;
+
+	private  long productDetailsId;
 
 	//交货地点
 	@Column(columnDefinition ="varchar(255)COMMENT  '交货地点'" )
@@ -119,11 +120,11 @@ public class SalesOrderDetails extends BasePo{
 		this.resourcesNumber = resourcesNumber;
 	}
 
-	public float getProductNo() {
+	public double getProductNo() {
 		return productNo;
 	}
 
-	public void setProductNo(float productNo) {
+	public void setProductNo(double productNo) {
 		this.productNo = productNo;
 	}
 
@@ -181,5 +182,13 @@ public class SalesOrderDetails extends BasePo{
 
 	public void setProductionPlanDetails(ProductionPlanDetails productionPlanDetails) {
 		this.productionPlanDetails = productionPlanDetails;
+	}
+
+	public long getProductDetailsId() {
+		return productDetailsId;
+	}
+
+	public void setProductDetailsId(long productDetailsId) {
+		this.productDetailsId = productDetailsId;
 	}
 }

@@ -50,6 +50,50 @@ public class SalesOrderServiceImp implements SalesOrderService {
     MessageUtil messageUtil;
 
     /*
+    新建订单
+     */
+    @Override
+    public ResultObject<SalesOrder> addNew(String orderDetails,String note) throws BusinessRuntimeException {
+        ResultObject<SalesOrder> ro = new ResultObject<>();
+        SalesOrder salesOrder = new SalesOrder();
+        String planNo = salesOrderDao.findMaxPlanNo();
+        salesOrder.setOrderNo(Utils.newPlanNo(planNo, "Z"));
+        OrderDetailsModel o = new OrderDetailsModel();
+        List<SalesOrderDetails> salesOrderDetailsList = new ArrayList<>();
+        JSONArray array = JSONArray.fromObject(orderDetails);
+        ProductionPlanDetails productionPlanDetails = new ProductionPlanDetails();
+        if(array.size()>0){
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                OrderDetailsModel orderDetailsModel = o.j2m(object);
+                long productDetailsId = orderDetailsModel.getProductDetailsId();
+                SalesOrderDetails salesOrderDetails = o.v2p(orderDetailsModel);
+                salesOrderDetails.setCreateDate(new Date());
+                salesOrderDetails.setEnabled(true);
+
+                productionPlanDetails = productionPlanDetailsDao.findById(productDetailsId);
+                if(productionPlanDetails!=null) {
+                    salesOrderDetails.setProductionPlanDetails(productionPlanDetails);
+                }
+            }
+                if(productionPlanDetails.getSalesPlan()!=null) {
+                    Client client = productionPlanDetails.getSalesPlan().getClient();
+                    if (client.getParentClientId() != 0) {
+                        salesOrder.setCliId(client.getParentClientId());
+                        salesOrder.setCliente(client.getParent());
+                    } else {
+                        salesOrder.setCliId(client.getId());
+                        salesOrder.setCliente(client);
+                    }
+                }
+        }
+        return ro;
+    }
+
+
+
+    /*
     新建
      */
     @Override
@@ -80,7 +124,6 @@ public class SalesOrderServiceImp implements SalesOrderService {
                 SalesOrderDetails salesOrderDetails = moo.v2p(conDetailsModel);
                 salesOrderDetails.setCreateDate(new Date());
                 ProductionPlanDetails planDetails = productionPlanDetailsDao.findById((long) productionPlanDetailsIds);
-
                 if (planDetails != null) {
                     salesOrderDetails.setProductionPlanDetails(planDetails);
                 }
@@ -335,6 +378,25 @@ public class SalesOrderServiceImp implements SalesOrderService {
             }
         }
 
+
+        return ro;
+    }
+    /*
+    根据未归档合同查询所有订单
+    */
+    @Override
+    public ResultObject<SalesOrder> findAllOders() throws BusinessRuntimeException {
+        ResultObject<SalesOrder> ro = new ResultObject<>();
+        List<SalesOrder> allOders = salesOrderDao.findAllOders();
+        if(allOders!=null){
+            ro.setData(allOders);
+            ro.setSuccess(true);
+            ro.setMsg("查询成功");
+        }else{
+            ro.setSuccess(false);
+            ro.setMsg("查询失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
 
         return ro;
     }

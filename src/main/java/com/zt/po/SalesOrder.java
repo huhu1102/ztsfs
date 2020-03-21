@@ -51,7 +51,6 @@ public class SalesOrder extends BasePo {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date signContractDate;
 
-
 	private boolean hasContract;//是否有合同
 
 	//关联合同

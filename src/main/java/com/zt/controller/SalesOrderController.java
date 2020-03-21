@@ -5,7 +5,6 @@ import com.zt.model.ResultObject;
 import com.zt.model.ResultPage;
 import com.zt.model.SalesOrderModel;
 import com.zt.po.SalesOrder;
-import com.zt.po.SalesPlan;
 import com.zt.service.SalesOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author wl
@@ -26,6 +23,15 @@ public class SalesOrderController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	SalesOrderService salesOrderService;
+
+	/*
+	新建订单
+	 */
+	@RequestMapping(value = "/addnew",method = RequestMethod.GET)
+	public ResultObject<SalesOrder> addNew(String orderDetails,String note){
+		return salesOrderService.addNew(orderDetails,note);
+	}
+
 	/*
 	新建
 	 */
@@ -47,6 +53,14 @@ public class SalesOrderController {
 	@RequestMapping(value="/findbypage",method=RequestMethod.GET)
 	public ResultPage<SalesOrder> findbypage(String clientName,String productName,String empName,String start,String end,Integer status,int page,int size) {
 		return salesOrderService.findSearch(clientName,productName,empName,start,end,status,page,size);
+	}
+
+	/*
+	根据未归档合同查询所有订单
+	 */
+	@RequestMapping(value = "/findalloders",method = RequestMethod.GET)
+	public ResultObject<SalesOrder> findAllOders(){
+		return salesOrderService.findAllOders();
 	}
 	/*
 	根据状态查询每个状态的数量

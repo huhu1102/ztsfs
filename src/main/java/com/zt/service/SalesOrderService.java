@@ -6,8 +6,6 @@ import com.zt.model.ResultPage;
 import com.zt.model.SalesOrderModel;
 import com.zt.po.SalesOrder;
 
-import java.text.ParseException;
-
 /**
  * @author wl
  * @date 2019年4月23日 
@@ -35,4 +33,8 @@ public interface SalesOrderService {
     ResultObject<SalesOrder> findStatus()throws BusinessRuntimeException;
 
     ResultObject<SalesOrder> annul(long salesOrderId)throws BusinessRuntimeException;
+
+    ResultObject<SalesOrder> findAllOders()throws BusinessRuntimeException;
+
+	ResultObject<SalesOrder> addNew(String orderDetails,String note)throws BusinessRuntimeException;
 }

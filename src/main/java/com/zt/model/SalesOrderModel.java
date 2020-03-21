@@ -1,11 +1,9 @@
 package com.zt.model;
 
 import com.zt.po.BasePo;
-
 import com.zt.po.SalesOrder;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * @author wl
@@ -112,28 +110,6 @@ public class SalesOrderModel extends BasePo {
     }
 
 
-    public SalesOrder v2p(SalesOrderModel mo) {
-        SalesOrder c = new SalesOrder();
-        if (mo.getId() != 0) {
-            c.setId(mo.getId());
-        }
-        c.setTotalMoney(mo.getTotalMoney());
-        c.setCliId(mo.getCliId());
-        c.setEmpId(mo.getEmpId());
-        c.setContractName(mo.getContractName());
-		c.setClientArr(mo.getClientArr());
-		c.setTax(mo.getTax());
-		if(null!=mo.getContractName()){
-		c.setContractName(mo.getContractName());
-        }
-//		c.setCon
-//        c.setCreateDate(new Date());
-        c.setNotes(mo.getNotes());
-        c.setHasContract(mo.getHasContract());
-        c.setEnabled(true);
-        return c;
-    }
-
     public Boolean getHasContract() {
         return hasContract;
     }
@@ -164,6 +140,27 @@ public class SalesOrderModel extends BasePo {
 
     public void setId(long id) {
         this.id = id;
+    }
+    public SalesOrder v2p(SalesOrderModel mo) {
+        SalesOrder c = new SalesOrder();
+        if (mo.getId() != 0) {
+            c.setId(mo.getId());
+        }
+        c.setTotalMoney(mo.getTotalMoney());
+        c.setCliId(mo.getCliId());
+        c.setEmpId(mo.getEmpId());
+        c.setContractName(mo.getContractName());
+        c.setClientArr(mo.getClientArr());
+        c.setTax(mo.getTax());
+        if(null!=mo.getContractName()){
+            c.setContractName(mo.getContractName());
+        }
+//		c.setCon
+//        c.setCreateDate(new Date());
+        c.setNotes(mo.getNotes());
+        c.setHasContract(mo.getHasContract());
+        c.setEnabled(true);
+        return c;
     }
 
 }
