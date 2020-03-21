@@ -61,24 +61,28 @@ public class SalesOrderServiceImp implements SalesOrderService {
         OrderDetailsModel o = new OrderDetailsModel();
         List<SalesOrderDetails> salesOrderDetailsList = new ArrayList<>();
         JSONArray array = JSONArray.fromObject(orderDetails);
-        ProductionPlanDetails productionPlanDetails = new ProductionPlanDetails();
+        ProductionPlanDetails productionPlanDetails ;
+        ProductionPlanDetails productionPlanDetailsfirst = new ProductionPlanDetails();
         if(array.size()>0){
 
             for (int i = 0; i < array.size(); i++) {
                 JSONObject object = array.getJSONObject(i);
+
                 OrderDetailsModel orderDetailsModel = o.j2m(object);
                 long productDetailsId = orderDetailsModel.getProductDetailsId();
                 SalesOrderDetails salesOrderDetails = o.v2p(orderDetailsModel);
                 salesOrderDetails.setCreateDate(new Date());
                 salesOrderDetails.setEnabled(true);
-
                 productionPlanDetails = productionPlanDetailsDao.findById(productDetailsId);
+                if(i==0){
+                 productionPlanDetailsfirst = productionPlanDetailsDao.findById(productDetailsId);
+                }
                 if(productionPlanDetails!=null) {
                     salesOrderDetails.setProductionPlanDetails(productionPlanDetails);
                 }
             }
-                if(productionPlanDetails.getSalesPlan()!=null) {
-                    Client client = productionPlanDetails.getSalesPlan().getClient();
+                if(productionPlanDetailsfirst.getSalesPlan()!=null) {
+                    Client client = productionPlanDetailsfirst.getSalesPlan().getClient();
                     if (client.getParentClientId() != 0) {
                         salesOrder.setCliId(client.getParentClientId());
                         salesOrder.setCliente(client.getParent());

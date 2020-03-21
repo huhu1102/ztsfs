@@ -70,21 +70,21 @@ public class ProductionPlanDetailsController {
 		return productionPlanDetailsService.findBystatus(queryName, page,size);
 	}
 	/**
-	  查询新增生产计划 个数
+	  *查询新增生产计划 个数
 	 */
 	@RequestMapping(value = "/findcount",method = RequestMethod.GET)
 	public ResultObject<ProductionPlanDetails> findCount(){
 		return productionPlanDetailsService.findCount();
 	}
 
-	/*
-	修改生产计划详情
+	/**
+	 * 修改生产计划详情
  	*/
 	@RequestMapping(value="/update",method = RequestMethod.POST)
 	public ResultObject<ProductionPlanDetails> update(ProductionPlanDetailsModel productionPlanDetailsModel){
 		return productionPlanDetailsService.update(productionPlanDetailsModel);
 	}
-	/*
+	/**
 	 * 删除
 	 */
 	@RequestMapping(value="/deletmark",method=RequestMethod.GET)

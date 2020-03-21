@@ -138,7 +138,6 @@ public class ProductionPlanDetailsServiceImp implements ProductionPlanDetailsSer
             ro.setTotalPages(pages.getTotalPages());
         } else {
             ro.setSuccess(false);
-
             throw new BusinessRuntimeException(ResultCode.UNKNOWN_ERROR);
         }
         return ro;

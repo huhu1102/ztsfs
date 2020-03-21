@@ -158,7 +158,6 @@ public class Utils {
 		for (int i = 0; i < days.length; i++) {
 			 if(!(days[i].equals(""))){
 				 map.put(i+"",Utils.parseTimeZone(days[i]));
-
 			 }
 		}
 		return map;
