@@ -35,4 +35,6 @@ public interface SalesOrderService {
     ResultObject<SalesOrder> annul(long salesOrderId)throws BusinessRuntimeException;
 
     ResultObject<SalesOrder> findAllOders()throws BusinessRuntimeException;
+
+	ResultObject<SalesOrder> addNew(String orderDetails,String note)throws BusinessRuntimeException;
 }

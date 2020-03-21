@@ -20,6 +20,7 @@ public class SalesOrderDetailsModel extends BasePo{
 	private static final long serialVersionUID = 1L;
 
 
+
 	private long id;
 	
 	//物资编码

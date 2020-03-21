@@ -23,6 +23,15 @@ public class SalesOrderController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	SalesOrderService salesOrderService;
+
+	/*
+	新建订单
+	 */
+	@RequestMapping(value = "/addnew",method = RequestMethod.GET)
+	public ResultObject<SalesOrder> addNew(String orderDetails,String note){
+		return salesOrderService.addNew(orderDetails,note);
+	}
+
 	/*
 	新建
 	 */
