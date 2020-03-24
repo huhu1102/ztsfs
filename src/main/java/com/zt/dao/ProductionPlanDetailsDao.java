@@ -194,4 +194,25 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
                                           @Param("startDate")String startDate,
                                           @Param("clientName")String clientName,
                                           @Param("status")Integer status);
+    /*
+     * 模糊条件查询查合同状态为1和3的
+     */
+    @Query( value = "SELECT ppd.* FROM  zt_productionplandetails AS ppd \n" +
+            "       \tLEFT JOIN zt_salesplan  sp ON sp.id=ppd.salesPlan_id \n" +
+            "         \tLEFT JOIN zt_employee  e ON e.id=ppd.employeeId\n" +
+            "          \tWHERE ppd.enabled = TRUE \n" +
+            "          \tAND ppd.`status`=:status \n" +
+            "\tAND IF(:clientName !='', sp.clientName LIKE %:clientName%, 1 = 1 )\n" +
+            "           \tAND IF( :productName !='', sp.productName LIKE %:productName%, 1 = 1 )\n" +
+            "            \tAND IF( :empName != '', e.name LIKE %:empName%, 1 = 1 )\n" +
+            "            \tAND IF( :startDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) >=:startDate, 1 = 1 )\n" +
+            "            \tAND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 )" +
+            "AND ppd.contractStatus=1 or ppd.contractStatus=3 order by  ppd.id desc"
+            ,nativeQuery = true)
+    List<ProductionPlanDetails> findAllForContract(@Param("productName") String productName,
+                                          @Param("empName") String empName,
+                                          @Param("endDate")String endDate,
+                                          @Param("startDate")String startDate,
+                                          @Param("clientName")String clientName,
+                                          @Param("status")Integer status);
 }

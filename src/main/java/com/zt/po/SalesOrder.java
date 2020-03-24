@@ -37,7 +37,7 @@ public class SalesOrder extends BasePo {
 	//客户
 	@ManyToOne
 	@JoinColumn(name="clienteleid")
-	private Client cliente;
+		private Client cliente;
 	//客户Id
 	@Column(columnDefinition ="bigint(20)  COMMENT '客户Id.'" )
 	private Long cliId;
