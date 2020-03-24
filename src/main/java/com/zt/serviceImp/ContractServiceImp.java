@@ -3,13 +3,12 @@ package com.zt.serviceImp;
 import com.zt.common.Message;
 import com.zt.common.MessageUtil;
 import com.zt.common.Utils;
-import com.zt.dao.ClientDao;
-import com.zt.dao.ContractDao;
-import com.zt.dao.EmployeeDao;
-import com.zt.dao.UploadFileDao;
+import com.zt.dao.*;
 import com.zt.model.*;
 import com.zt.po.Contract;
 import com.zt.po.Employee;
+import com.zt.po.ProductionPlanDetails;
+import com.zt.po.SalesOrder;
 import com.zt.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +36,10 @@ public class ContractServiceImp implements ContractService {
     ClientDao clientDao;
     @Autowired
     EmployeeDao employeeDao;
+    @Autowired
+    SalesOrderDao salesOrderDao;
+    @Autowired
+    ProductionPlanDetailsDao productionPlanDetailsDao;
 
 
     /**
@@ -185,11 +188,16 @@ public class ContractServiceImp implements ContractService {
         ResultObject<Object> ro=new ResultObject<>();
         Map<String, Object> map=new HashMap<>();
         List<Employee> employeeList = employeeDao.findAll();
+        List<SalesOrder> orderList = salesOrderDao.findAllOders();
+        List<ProductionPlanDetails> prePlans = productionPlanDetailsDao.findByCon("","","","","",3);
+
         if (employeeList==null) {
             ro.setSuccess(false);
             throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
         }else {
             map.put("employee", employeeList);
+            map.put("orderList", orderList);
+            map.put("prePlans", prePlans);
             ro.setRoot(map);
             ro.setSuccess(true);
         }

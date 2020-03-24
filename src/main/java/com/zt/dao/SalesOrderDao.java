@@ -61,8 +61,8 @@ public interface SalesOrderDao extends JpaRepository<SalesOrder, Long> {
     Set<SalesOrder> findStatus();
 
 
-    @Query("select s.orderNo,s.cliente from SalesOrder s where s.enabled=true and s.hasContract=false order by s.cliId asc,s.createDate desc")
+    @Query("select s from SalesOrder s where s.enabled=true and s.hasContract=false order by s.cliId asc,s.createDate desc")
     List<SalesOrder> findAllOders();
-
+    //   .orderNo,s.cliente
 
 }
