@@ -186,6 +186,7 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
             "            \tAND IF( :empName != '', e.name LIKE %:empName%, 1 = 1 )\n" +
             "            \tAND IF( :startDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) >=:startDate, 1 = 1 )\n" +
             "            \tAND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 )" +
+            "AND ppd.enabled = true" +
             "AND ppd.contractStatus=1 or ppd.contractStatus=3 order by  ppd.id desc"
             ,nativeQuery = true)
     List<ProductionPlanDetails> findByCon(@Param("productName") String productName,
