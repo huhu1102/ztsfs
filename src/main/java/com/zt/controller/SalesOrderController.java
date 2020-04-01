@@ -24,8 +24,8 @@ public class SalesOrderController {
 	@Autowired
 	SalesOrderService salesOrderService;
 
-	/*
-	新建订单
+	/**
+	     合同新建订单
 	 */
 	@RequestMapping(value = "/addnew",method = RequestMethod.GET)
 	public ResultObject<SalesOrder> addNew(String orderDetails,String note){

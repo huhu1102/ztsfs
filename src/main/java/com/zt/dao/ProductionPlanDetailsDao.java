@@ -21,15 +21,15 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
 	 * 自定义分页模糊条件查询
 	 */
     @Query( value = "SELECT ppd.* FROM  zt_productionplandetails AS ppd \n" +
-            "       \tLEFT JOIN zt_salesplan  sp ON sp.id=ppd.salesPlan_id \n" +
-            "         \tLEFT JOIN zt_employee  e ON e.id=ppd.employeeId\n" +
-            "          \tWHERE ppd.enabled = TRUE \n" +
-            "          \tAND ppd.`status`=:state \n" +
-            "\tAND IF(:clientName !='', sp.clientName LIKE %:clientName%, 1 = 1 )\n" +
-            "           \tAND IF( :productName !='', sp.productName LIKE %:productName%, 1 = 1 )\n" +
-            "            \tAND IF( :empName != '', e.name LIKE %:empName%, 1 = 1 )\n" +
-            "            \tAND IF( :startDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) >=:startDate, 1 = 1 )\n" +
-            "            \tAND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 ) order by  ppd.id desc",
+            "       LEFT JOIN zt_salesplan  sp ON sp.id=ppd.salesPlan_id \n" +
+            "         LEFT JOIN zt_employee  e ON e.id=ppd.employeeId\n" +
+            "          WHERE ppd.enabled = TRUE \n" +
+            "          AND ppd.`status`=:state \n" +
+            " AND IF(:clientName !='', sp.clientName LIKE %:clientName%, 1 = 1 )\n" +
+            "          AND IF( :productName !='', sp.productName LIKE %:productName%, 1 = 1 )\n" +
+            "            AND IF( :empName != '', e.name LIKE %:empName%, 1 = 1 )\n" +
+            "            AND IF( :startDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) >=:startDate, 1 = 1 )\n" +
+            "            AND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 ) order by  ppd.id desc",
             countQuery = "SELECT count(*) FROM  zt_productionplandetails AS ppd \n" +
                     "            \tLEFT JOIN zt_salesplan  sp ON sp.id=ppd.salesPlan_id \n" +
                     "            \tLEFT JOIN zt_employee  e ON e.id=ppd.employeeId\n" +
@@ -83,7 +83,6 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
 
     @Query("select p  from ProductionPlanDetails p where p.salesPlanId=?1")
     List<ProductionPlanDetails> findBySalesPlanId(long id);
-
     /*
     修改完成数量
      */
@@ -173,8 +172,9 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
     @Query(value = "update zt_productionplandetails s SET  s.expectLevel=:expectLevel , s.resendStr=:sendStr,s.resendNo=:planNumber,s.resendId=:resendId,s.sendDate=NOW() where s.id =:productDetailsId ", nativeQuery = true)
     int changeSend(@Param("expectLevel") Integer expectLevel, @Param("productDetailsId")long productDetailsId, @Param("sendStr")String sendStr, @Param("planNumber")float planNumber, @Param("resendId")long resendId);
 
-    /*
+    /**
      * 模糊条件查询查合同状态为1和3的
+     * 2020-3-31日修改， 将条件去掉or ppd.contractStatus=3 修改为ppd.contractStatus!=2
      */
     @Query( value = "SELECT ppd.* FROM  zt_productionplandetails AS ppd \n" +
             "       \tLEFT JOIN zt_salesplan  sp ON sp.id=ppd.salesPlan_id \n" +
@@ -186,8 +186,8 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
             "            \tAND IF( :empName != '', e.name LIKE %:empName%, 1 = 1 )\n" +
             "            \tAND IF( :startDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) >=:startDate, 1 = 1 )\n" +
             "            \tAND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 )" +
-            "AND ppd.enabled = true" +
-            "AND ppd.contractStatus=1 or ppd.contractStatus=3 order by  ppd.id desc"
+            "AND ppd.enabled = true " +
+            "AND ppd.contractStatus!=2  order by  ppd.id desc"
             ,nativeQuery = true)
     List<ProductionPlanDetails> findByCon(@Param("productName") String productName,
                                           @Param("empName") String empName,
@@ -216,4 +216,4 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
                                           @Param("startDate")String startDate,
                                           @Param("clientName")String clientName,
                                           @Param("status")Integer status);
-}
+    }

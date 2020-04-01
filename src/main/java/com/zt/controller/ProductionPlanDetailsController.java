@@ -37,7 +37,17 @@ public class ProductionPlanDetailsController {
 														int page, int size) {
 		return productionPlanDetailsService.findSearch(page,size,  productName, empName,endDate, startDate,clientName,status);
 	}
-	//查询合同状态为1和3的
+
+	/**
+	 * 查询合同状态为1和3的
+	 * @param productName
+	 * @param empName
+	 * @param endDate
+	 * @param startDate
+	 * @param clientName
+	 * @param status
+	 * @return
+	 */
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
 	public ResultObject<ProductionPlanDetails> find(String productName,
 											 String empName,

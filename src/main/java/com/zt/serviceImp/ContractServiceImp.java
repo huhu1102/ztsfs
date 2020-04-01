@@ -5,10 +5,7 @@ import com.zt.common.MessageUtil;
 import com.zt.common.Utils;
 import com.zt.dao.*;
 import com.zt.model.*;
-import com.zt.po.Contract;
-import com.zt.po.Employee;
-import com.zt.po.ProductionPlanDetails;
-import com.zt.po.SalesOrder;
+import com.zt.po.*;
 import com.zt.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,10 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ContractServiceImp implements ContractService {
@@ -190,12 +184,14 @@ public class ContractServiceImp implements ContractService {
         List<Employee> employeeList = employeeDao.findAll();
         List<SalesOrder> orderList = salesOrderDao.findAllOders();
         List<ProductionPlanDetails> prePlans = productionPlanDetailsDao.findByCon("","","","","",3);
+        Set<Client> clients = clientDao.findClient();
 
         if (employeeList==null) {
             ro.setSuccess(false);
             throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
         }else {
             map.put("employee", employeeList);
+            map.put("clients", clients);
             map.put("orderList", orderList);
             map.put("prePlans", prePlans);
             ro.setRoot(map);
