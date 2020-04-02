@@ -213,4 +213,28 @@ public class ContractServiceImp implements ContractService {
         }
         return num;
     }
+
+    @Override
+    public ResultObject<Object> findByClientId(long clientId) {
+        ResultObject<Object> ro=new ResultObject<>();
+        Map<String, Object> map=new HashMap<>();
+        List<Long> ids=new ArrayList<>();
+        ids.add(clientId);
+        Client  client=clientDao.findById(clientId);
+        if(client.getChild()!=null && client.getChild().size()>0){
+            List<Client> children=client.getChild();
+            for (int i = 0; i < children.size(); i++) {
+                ids.add(children.get(i).getId());
+            }
+        }
+        List<ProductionPlanDetails> planDetail =  productionPlanDetailsDao.findbyClientId(ids);
+        map.put("planDetail",planDetail);
+        if(null!=planDetail){
+          ro.setRoot(map);
+          ro.setSuccess(true);
+        }else{
+            ro.setSuccess(false);
+        }
+        return null;
+    }
 }

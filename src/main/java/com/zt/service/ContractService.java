@@ -20,4 +20,6 @@ public interface ContractService {
     ResultObject<Contract> delete(long id);
 
     ResultObject<Object> getBaseData();
+
+    ResultObject<Object> findByClientId(long clientId);
 }

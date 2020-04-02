@@ -220,4 +220,8 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
     @Modifying
     @Query(value = "UPDATE zt_productionplandetails SET contractNo = 100, actualQuantity = (CASE WHEN actualQuantity - ?2 > 0 THEN 3 ELSE 2 END) WHERE id = ?1;",nativeQuery = true)
     int updateContractStatus(long productdetailId, Double quntity);
+
+
+    @Query(value = "SELECT p.* from  zt_productionplandetails  p  LEFT JOIN zt_salesplan   s  on  s.id=p.salesPlanId  LEFT JOIN  zt_client  c  on  c.id=s.client_id WHERE  c.id in(?1)",nativeQuery = true)
+    List<ProductionPlanDetails> findbyClientId(List<Long> clientId);
 }

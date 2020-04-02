@@ -93,7 +93,6 @@ public class Contract extends BasePo{
     @Column(columnDefinition ="datetime COMMENT '合同失效时间'" )
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-
     //合同状态
     /**
      * 1.新建

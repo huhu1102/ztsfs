@@ -59,4 +59,12 @@ public class ContractController {
     public ResultObject<Object> basicdata(){
         return contractService.getBaseData();
     }
+    /**
+
+     */
+    @RequestMapping(value="/findByClientId",method=RequestMethod.GET)
+    public ResultObject<Object> findByClientId(long clientId){
+        return contractService.findByClientId(clientId);
+    }
+
 }
