@@ -34,7 +34,9 @@ public class ContractSchedule extends BasePo{
     private Employee  operator;
     /**
      * 状态:
-     * 1.
+     * 1.办理中
+     * 2.已完成
+     * 3.无此步骤
      */
     private Integer statue;
 
@@ -45,6 +47,8 @@ public class ContractSchedule extends BasePo{
     @Column(columnDefinition ="datetime COMMENT '操作时间'" )
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
+    private long contractId;
 
     public long getId() {
         return id;
@@ -114,5 +118,13 @@ public class ContractSchedule extends BasePo{
     }
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(long contractId) {
+        this.contractId = contractId;
     }
 }
