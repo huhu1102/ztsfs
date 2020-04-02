@@ -75,6 +75,21 @@ public class ContractModel extends BasePo {
      */
     private String contractCode;
 
+    /**
+     * 合同进度名称
+     */
+    private String contractCodeName;
+
+    /**
+     * 合同进度备注
+     */
+    private String contractScheduleNotes;
+
+    /**
+     * 合同进度状态
+     */
+    private Integer contractScheduleStatus;
+
     public long getContractId() {
         return contractId;
     }
@@ -226,6 +241,30 @@ public class ContractModel extends BasePo {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getContractScheduleStatus() {
+        return contractScheduleStatus;
+    }
+
+    public void setContractScheduleStatus(Integer contractScheduleStatus) {
+        this.contractScheduleStatus = contractScheduleStatus;
+    }
+
+    public String getContractScheduleNotes() {
+        return contractScheduleNotes;
+    }
+
+    public void setContractScheduleNotes(String contractScheduleNotes) {
+        this.contractScheduleNotes = contractScheduleNotes;
+    }
+
+    public String getContractCodeName() {
+        return contractCodeName;
+    }
+
+    public void setContractCodeName(String contractCodeName) {
+        this.contractCodeName = contractCodeName;
     }
 
     public Contract v2p(ContractModel mo){

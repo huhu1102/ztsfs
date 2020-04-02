@@ -17,4 +17,6 @@ public interface ContractScheduleDao extends JpaRepository<ContractSchedule,Long
     ContractSchedule findById(long id);
     @Query("SELECT  c from ContractSchedule c where c.enabled=true and c.contractCodeId=?1")
     List<ContractSchedule> findByCodeId(long id);
+    @Query("SELECT  c from ContractSchedule c where c.enabled=true and c.contractId=?1")
+    List<ContractSchedule> findByContractId(long contractId);
 }

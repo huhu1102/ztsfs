@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -34,6 +35,10 @@ public class ContractServiceImp implements ContractService {
     SalesOrderDao salesOrderDao;
     @Autowired
     ProductionPlanDetailsDao productionPlanDetailsDao;
+    @Autowired
+    ContractCodeDao contractCodeDao;
+    @Autowired
+    ContractScheduleDao contractScheduleDao;
 
 
     /**
@@ -96,25 +101,47 @@ public class ContractServiceImp implements ContractService {
         Employee employee = employeeDao.findById(contract.getEmpId());
         contract.setEmployee(employee);
         contract = contractDao.saveAndFlush(contract);
-        if(contract!=null){
-            ro.setSuccess(true);
-            ro.setMsg("新建合同成功");
-            //发送消息
-            int e = msgUtil.sendMsg("新建一个合同", "", "Contract", contract.getId(), message.UserIds());
-            if(e>0) {
-                ro.setSuccess(true);
-                ro.setMsg("发送消息成功");
-            }else {
-                ro.setSuccess(false);
-                ro.setMsg("发送消息失败");
-            }
-        }else{
+        if(null == contract){
             ro.setSuccess(false);
             ro.setMsg("新建合同失败");
             throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
         }
+
+        //保存合同进度
+        ContractSchedule contractSchedule = new ContractSchedule();
+        saveContractSchedule(contractSchedule,contractModel, contract, employee);
+
+        ro.setSuccess(true);
+        ro.setMsg("新建合同成功");
+        //发送消息
+        int e = msgUtil.sendMsg("新建一个合同", "", "Contract", contract.getId(), message.UserIds());
+        if(e<=0) {
+            ro.setSuccess(false);
+            ro.setMsg("发送消息失败");
+        }
+        ro.setSuccess(true);
+        ro.setMsg("发送消息成功");
         return ro;
     }
+
+    /**
+     * 保存合同进度
+     * @param contractSchedule
+     * @param contractModel
+     * @param contract
+     * @param employee
+     */
+    private void saveContractSchedule(ContractSchedule contractSchedule,ContractModel contractModel, Contract contract, Employee employee) {
+        contractSchedule.setEnabled(true);
+        contractSchedule.setContractCode(contractCodeDao.findByName(contractModel.getContractCodeName()));
+        contractSchedule.setContractId(contract.getId());
+        contractSchedule.setCreateDate(contract.getCreateDate());
+        contractSchedule.setOperator(employee);
+        contractSchedule.setNote(contractModel.getContractScheduleNotes());
+        contractSchedule.setStatue(contractModel.getContractScheduleStatus());
+        contractScheduleDao.saveAndFlush(contractSchedule);
+    }
+
     /*
     修改方法
      */
@@ -130,6 +157,13 @@ public class ContractServiceImp implements ContractService {
         contract.setEmployee(employee);
         contract = contractDao.saveAndFlush(contract);
         if(contract!=null){
+
+            //保存合同进度
+            List<ContractSchedule> contractScheduleList = contractScheduleDao.findByContractId(contract.getId());
+            if(!CollectionUtils.isEmpty(contractScheduleList)){
+                saveContractSchedule(contractScheduleList.get(0),contractModel, contract, employee);
+            }
+
             ro.setSuccess(true);
             ro.setMsg("修改合同成功");
             //发送消息
