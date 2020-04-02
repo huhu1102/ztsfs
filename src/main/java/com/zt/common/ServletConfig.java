@@ -8,11 +8,11 @@ package com.zt.common;
 //@Configuration
 //public class ServletConfig {
 //    @Bean
-//    public EmbeddedServletContainerCustomizer containerCustomizer() {
-//        return container -> {
-//            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/index.html");
-//            container.addErrorPages(error404Page);
-//        };
-//    }
-//}
+////    public EmbeddedServletContainerCustomizer containerCustomizer() {
+////        return container -> {
+////            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/index.html");
+////            container.addErrorPages(error404Page);
+////        };
+////    }
+////}
 

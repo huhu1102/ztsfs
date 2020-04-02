@@ -35,11 +35,11 @@ public class ProductionPlanDetails extends BasePo{
     //发货记录
     private String shippingStr;
 
-	/*
+	/**
 	添加合同的状态
 	1.没有合同
 	2.合同完结
-	3.有部分合同
+	3.
  */
 	private Integer contractStatus;
 	/*
@@ -56,7 +56,6 @@ public class ProductionPlanDetails extends BasePo{
 	private Long employeeId;
 	//完成数量
 	private float accomplishNO;
-
 	//关联编码
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produtionPlan" ,fetch =FetchType.LAZY )
 	private List<ProductionPlanSerialNumber> serialNumbers;
@@ -105,7 +104,7 @@ public class ProductionPlanDetails extends BasePo{
 	@Column(columnDefinition ="int(2) COMMENT  '是否合并成订单状态'" )
 	private Integer manageStatus;
 
-	//更新时间 该时间为可更新时间，在 该计划状态变化时该时间变化前台显示以该时间排序
+	//更新时间 该时间为可更新时间，在该计划状态变化时该时间变化前台显示以该时间排序
 	@Column(columnDefinition ="datetime  COMMENT '更新时间'" )
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
@@ -207,7 +206,6 @@ public class ProductionPlanDetails extends BasePo{
 	public void setSerialNumbers(List<ProductionPlanSerialNumber> serialNumbers) {
 		this.serialNumbers = serialNumbers;
 	}
-
 	public String getNote() {
 		return note;
 	}

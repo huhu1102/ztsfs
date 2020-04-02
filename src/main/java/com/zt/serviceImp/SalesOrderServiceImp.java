@@ -61,12 +61,19 @@ public class SalesOrderServiceImp implements SalesOrderService {
         String planNo = salesOrderDao.findMaxPlanNo();
         salesOrder.setOrderNo(Utils.newPlanNo(planNo, "Z"));
         salesOrder.setNotes(note);
+        salesOrder.setOrderStatus(1);
+        salesOrder.setContractName("买卖合同");
         salesOrder.setEnabled(true);
+        salesOrder.setEmployee(getEmpinfo());
+        salesOrder.setEmpId(getEmpinfo().getId());
         salesOrder.setCreateDate(new Date());
         ro = addDetails(orderDetails,salesOrder,"新建");
         return ro;
     }
-
+   //获取员工信息
+    private Employee getEmpinfo(){
+        return  employeeDao.findById(UsersUtils.getCurrentHr().getEmpId());
+    }
 
     /*
     修改订单
@@ -85,7 +92,14 @@ public class SalesOrderServiceImp implements SalesOrderService {
         return ro;
     }
 
-
+    /**
+     *  订单 添加详情方法
+     *
+     * @param orderDetails
+     * @param salesOrder
+     * @param orderStr
+     * @return
+     */
     private ResultObject<SalesOrder> addDetails(String orderDetails, SalesOrder salesOrder,String orderStr){
         ResultObject<SalesOrder> ro = new ResultObject<>();
         OrderDetailsModel o = new OrderDetailsModel();
@@ -93,39 +107,55 @@ public class SalesOrderServiceImp implements SalesOrderService {
         JSONArray array = JSONArray.fromObject(orderDetails);
         ProductionPlanDetails productionPlanDetails ;
         ProductionPlanDetails productionPlanDetailsfirst = new ProductionPlanDetails();
+
+        //完成状态
+        List<Long> comArr=new ArrayList<>();
+        //未完成状态
+        List<OrderDetailsModel>  detailModellist=new ArrayList<>();
+
+
         if(array.size()>0) {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject object = array.getJSONObject(i);
                 OrderDetailsModel orderDetailsModel = o.j2m(object);
+                detailModellist.add(orderDetailsModel);
                 long productDetailsId = orderDetailsModel.getProductDetailsId();
                 SalesOrderDetails salesOrderDetails = o.v2p(orderDetailsModel);
                 salesOrderDetails.setCreateDate(new Date());
                 salesOrderDetails.setEnabled(true);
                 productionPlanDetails = productionPlanDetailsDao.findById(productDetailsId);
+                //复制第一个生产计划详情；
                 if (i == 0) {
-                    productionPlanDetailsfirst = productionPlanDetailsDao.findById(productDetailsId);
+                    productionPlanDetailsfirst =Utils.clone(productionPlanDetails)   ;
                 }
                 if (productionPlanDetails != null) {
                     salesOrderDetails.setProductionPlanDetails(productionPlanDetails);
                 }
                 salesOrderDetails.setSalesOrder(salesOrder);
                 salesOrderDetailsList.add(salesOrderDetails);
+                logger.info(productionPlanDetailsfirst.toString());
             }
+
+             //获取第一条中的客户信息放入订单信息中
             if (productionPlanDetailsfirst.getSalesPlan() != null) {
                 Client client = productionPlanDetailsfirst.getSalesPlan().getClient();
-                if (client.getParentClientId() != 0) {
-                    salesOrder.setCliId(client.getParentClientId());
-                    salesOrder.setCliente(client.getParent());
-                } else {
                     salesOrder.setCliId(client.getId());
                     salesOrder.setCliente(client);
-                }
             }
             salesOrder.setSalesOrderDetails(salesOrderDetailsList);
             salesOrder = salesOrderDao.saveAndFlush(salesOrder);
             if (salesOrder != null) {
                 ro.setSuccess(true);
                 ro.setMsg(orderStr + "成功");
+                // 修改对应的生产计划详情状态
+                 int result=0;
+                for (OrderDetailsModel mode : detailModellist) {
+                    long productdetailId= mode.getProductDetailsId();
+                    Double   quntity=mode.getProductNo();
+
+                    result=  productionPlanDetailsDao.updateContractStatus(productdetailId,quntity);
+                }
+
                 //发送消息
                 String userName = UsersUtils.getCurrentHr().getEmpName();
                 StringBuilder title = new StringBuilder();
@@ -137,7 +167,6 @@ public class SalesOrderServiceImp implements SalesOrderService {
                 ro.setMsg(orderStr + "失败");
                 throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
             }
-
         }
         return ro;
     }
@@ -189,7 +218,11 @@ public class SalesOrderServiceImp implements SalesOrderService {
         salesOrder.setOrderNo(Utils.newPlanNo(planNo, "Z"));
         salesOrder = salesOrderDao.save(salesOrder);
         if (salesOrder != null) {
-            //修改对应生产计划详情状态
+            //修改对应生产计划详情状态与归档数量
+
+
+
+
             logger.info("创建成功");
             ro.setMsg("保存订单成功！");
             Integer re = productionPlanDetailsDao.changeContactState(planIds, 2);

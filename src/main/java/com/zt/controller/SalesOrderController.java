@@ -27,7 +27,7 @@ public class SalesOrderController {
 	/**
 	     合同新建订单
 	 */
-	@RequestMapping(value = "/addnew",method = RequestMethod.GET)
+	@RequestMapping(value = "/addnew",method = RequestMethod.POST)
 	public ResultObject<SalesOrder> addNew(String orderDetails,String note){
 		return salesOrderService.addNew(orderDetails,note);
 	}

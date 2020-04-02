@@ -216,4 +216,7 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
                                           @Param("startDate")String startDate,
                                           @Param("clientName")String clientName,
                                           @Param("status")Integer status);
-    }
+
+
+    int updateContractStatus(long productdetailId, Double quntity);
+}

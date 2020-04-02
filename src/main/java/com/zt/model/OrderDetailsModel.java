@@ -45,8 +45,12 @@ public class OrderDetailsModel {
         String productNo = String.valueOf(object.get("productNo"));
         if(!idStr.equals("null")&&!idStr.equals("0")){
             orderDetailsModel.setId(Long.parseLong(idStr));
-            orderDetailsModel.setProductNo(Double.parseDouble(productNo));
         }
+        orderDetailsModel.setProductNo(Double.parseDouble(productNo));
+        if(object.get("productDetailsId")!=null){
+         String  productId = String.valueOf(object.get("productDetailsId")) ;
+            orderDetailsModel.setProductDetailsId(Long.parseLong(productId));
+         }
         return orderDetailsModel;
     }
 
