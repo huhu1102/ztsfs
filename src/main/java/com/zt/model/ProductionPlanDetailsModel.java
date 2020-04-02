@@ -193,7 +193,7 @@ public class ProductionPlanDetailsModel extends BasePo {
         if (mo.getMark() != null) {
             ppdetail.setMark(mo.getMark());
         }
-        if(mo.getContractStatus()==0||mo.getContractStatus()==null){
+        if(mo.getContractStatus()==null||mo.getContractStatus()==0){
             ppdetail.setContractStatus(1);
         }else {
             ppdetail.setContractStatus(mo.getContractStatus());

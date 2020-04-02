@@ -370,6 +370,7 @@ public class ProductManageDetailsServiceImp implements ProductManageDetailsServi
                             ro=midMaterialSendMsg(middleProduct,ro);
                         }else if(DepmentAndPosCode.MINUS_NUMBER.equals(type)){
                             //删除对应的半成品出库记录
+                            logger.info(productManageDetailsId+"");
                             int a = midProductOutRecievingDao.deleteByManageId(productManageDetailsId);
                             if(a>0){
                                 ro.setSuccess(true);
@@ -433,6 +434,7 @@ public class ProductManageDetailsServiceImp implements ProductManageDetailsServi
      * @param ro
      * @return
      */
+
     private ResultObject<ProductManageDetails> finishedStep(ProductManageDetails productManageDetails, ResultObject<ProductManageDetails> ro) {
         //最后一步工序
         //修改半成品的库存

@@ -158,3 +158,4 @@ UPDATE `ztsfs`.`zt_menu` SET `id`='51', `btnText`='生产计划', `component`='P
 UPDATE `ztsfs`.`zt_menu` SET `id`='84', `btnText`='原材料采购', `component`='Product', `enabled`=b'1', `iconCls`=NULL, `isbtn`='4', `keepAlive`='0', `name`='原材料采购计划', `parentId`='152', `path`='/buyPlan', `requireAuth`='1', `url`='/rowBuyPlan/**', `pid`='152' WHERE (`id`='84');
 UPDATE `ztsfs`.`zt_menu` SET `id`='89', `btnText`='半成品采购', `component`='Product', `enabled`=b'1', `iconCls`=NULL, `isbtn`='4', `keepAlive`='0', `name`='半成品采购计划', `parentId`='152', `path`='/buymidPlan', `requireAuth`='1', `url`='/midBuyPlan/**', `pid`='152' WHERE (`id`='89');
 
+INSERT INTO `ztsfs`.`zt_menu` (`id`, `btnText`, `component`, `enabled`, `iconCls`, `isbtn`, `keepAlive`, `name`, `parentId`, `path`, `requireAuth`, `url`, `pid`) VALUES ('154', '合同管理', 'Contact', b'1', NULL, '3', '0', '合同管理', '45', '/contact', '1', '/contact/**', '45');

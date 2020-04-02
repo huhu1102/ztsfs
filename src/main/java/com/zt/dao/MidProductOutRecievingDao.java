@@ -40,6 +40,6 @@ public interface MidProductOutRecievingDao extends JpaRepository<MidProductOutRe
 	根据生产管理详情Id删除记录
 	 */
 	@Modifying
-	@Query(value = "delete from zt_midproductoutrecieving mp where mp.productManageDetailsId=?1",nativeQuery = true)
+	@Query(value = "UPDATE zt_midproductoutrecieving mp set mp.`enable`=FALSE where mp.productManageDetailsId=?1",nativeQuery = true)
 	int deleteByManageId(long productManageDetailsId);
 }

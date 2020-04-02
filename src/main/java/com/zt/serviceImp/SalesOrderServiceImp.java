@@ -54,6 +54,7 @@ public class SalesOrderServiceImp implements SalesOrderService {
     /*
     新建订单
      */
+    @Transactional
     @Override
     public ResultObject<SalesOrder> addNew(String orderDetails,String note) throws BusinessRuntimeException {
         ResultObject<SalesOrder> ro = new ResultObject<>();
@@ -78,6 +79,7 @@ public class SalesOrderServiceImp implements SalesOrderService {
     /*
     修改订单
      */
+    @Transactional
     @Override
     public ResultObject<SalesOrder> updateNew(long id, String orderDetails, String note) throws BusinessRuntimeException {
         ResultObject<SalesOrder> ro = new ResultObject<>();
@@ -149,23 +151,28 @@ public class SalesOrderServiceImp implements SalesOrderService {
                 ro.setMsg(orderStr + "成功");
                 // 修改对应的生产计划详情状态
                  int result=0;
+                 boolean flag=false;
                 for (OrderDetailsModel mode : detailModellist) {
                     long productdetailId= mode.getProductDetailsId();
                     Double   quntity=mode.getProductNo();
-
                     result=  productionPlanDetailsDao.updateContractStatus(productdetailId,quntity);
+                    if(result<0){
+                        flag=true;
+                    }
+                }
+                if(flag){//更新失败
+                    ro.setSuccess(false);
+                    ro.setMsg(orderStr + "失败");
+                    throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+                }else{
+                    //发送消息
+                    String userName = UsersUtils.getCurrentHr().getEmpName();
+                    StringBuilder title = new StringBuilder();
+                    title.append(userName);
+                    title.append(orderStr+"了一个销售订单");
+                    int re = msgUtil.sendMsg(title.toString(), "", "SalesOrder", salesOrder.getId(), message.UserIds());
                 }
 
-                //发送消息
-                String userName = UsersUtils.getCurrentHr().getEmpName();
-                StringBuilder title = new StringBuilder();
-                title.append(userName);
-                title.append(orderStr+"了一个销售订单");
-                int re = msgUtil.sendMsg(title.toString(), "", "SalesOrder", salesOrder.getId(), message.UserIds());
-            } else {
-                ro.setSuccess(false);
-                ro.setMsg(orderStr + "失败");
-                throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
             }
         }
         return ro;

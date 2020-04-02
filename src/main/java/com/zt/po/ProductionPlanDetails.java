@@ -39,7 +39,7 @@ public class ProductionPlanDetails extends BasePo{
 	添加合同的状态
 	1.没有合同
 	2.合同完结
-	3.
+	3.未完结
  */
 	private Integer contractStatus;
 	/*
