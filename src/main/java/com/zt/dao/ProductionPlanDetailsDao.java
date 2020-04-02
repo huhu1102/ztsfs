@@ -217,6 +217,6 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
                                           @Param("clientName")String clientName,
                                           @Param("status")Integer status);
 
-
+    @Query(value = "update zt_productionplandetails p set p.manageStatus=:state,p.updateDate=NOW() where p.id in(:planIds)",nativeQuery = true)
     int updateContractStatus(long productdetailId, Double quntity);
 }
