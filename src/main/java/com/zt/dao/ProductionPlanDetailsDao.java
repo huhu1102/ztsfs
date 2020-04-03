@@ -207,7 +207,7 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
             "           \tAND IF( :productName !='', sp.productName LIKE %:productName%, 1 = 1 )\n" +
             "            \tAND IF( :empName != '', e.name LIKE %:empName%, 1 = 1 )\n" +
             "            \tAND IF( :startDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) >=:startDate, 1 = 1 )\n" +
-            "            \tAND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 )" +
+            "  AND IF( :endDate != '', DATE_FORMAT(ppd.createDate, '%Y-%m-%d %k:%i:%s' ) <=:endDate, 1 = 1 )" +
             "AND ppd.contractStatus=1 or ppd.contractStatus=3 order by  ppd.id desc"
             ,nativeQuery = true)
     List<ProductionPlanDetails> findAllForContract(@Param("productName") String productName,
@@ -216,7 +216,6 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
                                           @Param("startDate")String startDate,
                                           @Param("clientName")String clientName,
                                           @Param("status")Integer status);
-
     @Modifying
     @Query(value = "UPDATE zt_productionplandetails SET contractNo = 100, actualQuantity = (CASE WHEN actualQuantity - ?2 > 0 THEN 3 ELSE 2 END) WHERE id = ?1;",nativeQuery = true)
     int updateContractStatus(long productdetailId, Double quntity);

@@ -126,6 +126,17 @@ public class ShippingBill extends BasePo{
             inverseJoinColumns = @JoinColumn(name = "manage_id"))
 	private List<ProductManage> manageList;
 
+	@Column(columnDefinition ="bigint(20)  COMMENT '成品库成品Id.'" )
+    private Long finishProductId;
+
+	public Long getFinishProductId() {
+		return finishProductId;
+	}
+
+	public void setFinishProductId(Long finishProductId) {
+		this.finishProductId = finishProductId;
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -28,6 +28,13 @@ public class ShippingBillController {
 	public  ResultObject<ShippingBill> savebill(ShippingBill dispatchBill){
 		return dbService.savebill(dispatchBill);
 	}
+	/*
+	 * 新增在无生产计划的条件下的新增
+	 */
+	@RequestMapping(value="/billAdd",method=RequestMethod.POST)
+	public  ResultObject<ShippingBill> billAdd(ShippingBill dispatchBill){
+		return dbService.billAdd(dispatchBill);
+	}
 
 	/*
 	更新

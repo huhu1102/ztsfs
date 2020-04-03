@@ -32,4 +32,6 @@ public interface ShippingBillService {
     ResultPage<ShippingBill> findForManage(long productManageId, int page, int size);
 	//根据生产计划ID查询发货记录
     ResultPage<ShippingBill> findForPlan(long productPlanId, int page, int size);
+
+	ResultObject<ShippingBill> billAdd(ShippingBill dispatchBill);
 }

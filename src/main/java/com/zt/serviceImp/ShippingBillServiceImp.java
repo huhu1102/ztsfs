@@ -141,8 +141,8 @@ public class ShippingBillServiceImp implements ShippingBillService {
         shippingBill.setShipingStatus(1);
         shippingBill = shippingBillDao.saveAndFlush(shippingBill);
 //		修改销售计划中发货量
-        if ( shippingBillDao.changeMidTable(shippingBill.getId(),shippingBill.getShippingRequestDetailsId())>0
-                &&null != shippingBill
+        if (null != shippingBill&& shippingBillDao.changeMidTable(shippingBill.getId(),shippingBill.getShippingRequestDetailsId())>0
+
                 && shippingBill.getPlanNumber() != 0) {
             if (changSaleMsg(shippingBill,0F) > 0&&changProductMsg(shippingBill, 0F)>0) {
                 ro.setSuccess(true);
@@ -155,6 +155,36 @@ public class ShippingBillServiceImp implements ShippingBillService {
             }
         }
         return ro;
+    }
+
+    @Override
+    public ResultObject<ShippingBill> billAdd(ShippingBill shippingBill) {
+        ResultObject<ShippingBill> ro = new ResultObject<>();
+        shippingBill.setCreateDate(new Date());
+        shippingBill.setEnabled(true);
+        if (shippingBill.getClientId() != 0) {
+            shippingBill.setClient(clientDao.findById(shippingBill.getClientId()));
+        }
+        //代收款
+        if (shippingBill.getCollFreight() != null) {
+            String money = NumberToCN.number2CNMontrayUnit(shippingBill.getCollFreight());
+            shippingBill.setCollFreightBig(money);
+        }
+        // 1.运输中2.已到达 3.已签收
+        shippingBill.setShipingStatus(1);
+        shippingBill = shippingBillDao.saveAndFlush(shippingBill);
+//		修改销售计划中发货量
+        if (shippingBill!=null) {
+                ro.setSuccess(true);
+                ro.setMsg("修改成功");
+                //发送消息给相关部门
+                ro = sendMsgToUser(shippingBill);
+            } else {
+                ro.setSuccess(false);
+                ro.setMsg("修改失败");
+            }
+        return ro;
+
     }
 
     /**

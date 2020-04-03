@@ -21,7 +21,7 @@ public interface FinishedProductService {
 	/*
 	 * 信息的更新
 	 */
-	public ResultObject<FinishedProduct> saveClient(FinishedProduct finishedProduct)throws BusinessRuntimeException;
+	public ResultObject<FinishedProduct> saveproduct(FinishedProduct finishedProduct)throws BusinessRuntimeException;
 	/**
 	 * @return
 	 */

@@ -269,6 +269,6 @@ public class ContractServiceImp implements ContractService {
         }else{
             ro.setSuccess(false);
         }
-        return null;
+        return ro;
     }
 }

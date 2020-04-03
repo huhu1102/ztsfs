@@ -52,7 +52,7 @@ public class FinishedProductController {
 	 * 更新
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public ResultObject<FinishedProduct> saveCli(FinishedProduct finishedProduct){
-	     return fpService.saveClient(finishedProduct);
+	public ResultObject<FinishedProduct> saveproduct(FinishedProduct finishedProduct){
+	     return fpService.saveproduct(finishedProduct);
 	  }
 }

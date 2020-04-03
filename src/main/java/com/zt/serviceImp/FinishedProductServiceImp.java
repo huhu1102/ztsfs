@@ -25,6 +25,7 @@ import com.zt.po.Client;
 import com.zt.po.FinishedProduct;
 import com.zt.po.Product;
 import com.zt.po.Workstep;
+
 import com.zt.service.FinishedProductService;
 
 /**
@@ -53,9 +54,8 @@ public class FinishedProductServiceImp implements FinishedProductService{
 		Page<FinishedProduct> pages = fpDao.findSearch(queryName,pageable);
 		
 		 if (pages!=null) {
-	        	int totals=(int) pages.getTotalElements();
 	        	 ro.setData(pages.getContent());
-	    	     ro.setTotal(totals);
+	    	     ro.setTotal(pages.getTotalElements());
 	    	     ro.setTotalPages(pages.getTotalPages());
 	    	     ro.setSuccess(true);
 			} else {
@@ -88,12 +88,22 @@ public class FinishedProductServiceImp implements FinishedProductService{
 	 * 更新修改
 	 */
 	@Override
-	public ResultObject<FinishedProduct> saveClient(FinishedProduct finishedProduct) throws BusinessRuntimeException {
+	public ResultObject<FinishedProduct> saveproduct(FinishedProduct finishedProduct) throws BusinessRuntimeException {
 		ResultObject<FinishedProduct> ro=new ResultObject<>();
 		if(Long.valueOf(finishedProduct.getId())==null||finishedProduct.getId()==0) {
 			finishedProduct.setCreateDate(new Date());
 		}	
 		finishedProduct.setEnabled(true);
+        long  productId=finishedProduct.getProductId();
+		Product  product=productDao.findById(productId);
+		Long clientId=finishedProduct.getClientId();
+		if(null!=clientId){
+		Client client= clientDao.findById((long)finishedProduct.getClientId());
+		finishedProduct.setClient(client);
+		}
+		if(null!=product){
+			finishedProduct.setProduct(product);
+		}
 		FinishedProduct pro = fpDao.saveAndFlush(finishedProduct);
 		if (pro!=null) {
 			ro.setSuccess(true);

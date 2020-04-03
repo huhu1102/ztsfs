@@ -36,6 +36,12 @@ public class FinishedProduct extends BasePo{
     //生产计划 详情
     @ManyToOne
     private ProductionPlanDetails productionPlanDetails;
+    //客户
+	@ManyToOne
+	private Client client;
+	//数量
+	@Column(columnDefinition ="bigint(20)COMMENT  '客户ID'" )
+	private Long clientId;
 	//数量
 	@Column(columnDefinition ="float(10,4)COMMENT  '成品数量'" )
 	private float proNumber;
@@ -127,7 +133,23 @@ public class FinishedProduct extends BasePo{
 		this.productionPlanDetailsId = productionPlanDetailsId;
 	}
 
-//	public Long getSalesPlanId() {
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Long getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}
+
+	//	public Long getSalesPlanId() {
 //		return salesPlanId;
 //	}
 //
