@@ -5,6 +5,7 @@ import com.zt.model.ResultObject;
 import com.zt.model.ResultPage;
 import com.zt.po.Contract;
 import com.zt.service.ContractService;
+import com.zt.vo.ContractVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,31 @@ public class ContractController {
                                            String signDateEnd ,Integer status,int page, int size) {
         return contractService.findSearch(contractName,clientName,empName,createDateStart,createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,signDateStart, signDateEnd ,status, page,size);
     }
+
+    /**
+     * 分页模糊条件查询(新)
+     * @param contractName
+     * @param clientName
+     * @param empName
+     * @param createDateStart
+     * @param createDateEnd
+     * @param startDateStart
+     * @param startDateEnd
+     * @param endDateStart
+     * @param endDateEnd
+     * @param signDateStart
+     * @param signDateEnd
+     * @param status
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping(value = "/listByPage",method = RequestMethod.GET)
+    public ResultPage<ContractVO> listByPage(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd, String signDateStart,
+                                             String signDateEnd , Integer status, int page, int size) {
+        return contractService.listByPage(contractName,clientName,empName,createDateStart,createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,signDateStart, signDateEnd ,status, page,size);
+    }
+
     /*
      * 新增
      */

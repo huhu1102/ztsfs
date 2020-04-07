@@ -3,6 +3,7 @@ package com.zt.po;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -110,6 +111,11 @@ public class Contract extends BasePo{
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
+    //关联合同
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="zt_salesorder_contract",joinColumns={@JoinColumn(name="c_id")}
+            ,inverseJoinColumns={@JoinColumn(name="s_id")})
+    private List<SalesOrder> salesOrderList;
 
     public long getId() {
         return id;
@@ -314,5 +320,13 @@ public class Contract extends BasePo{
 
     public void setSequence(String sequence) {
         this.sequence = sequence;
+    }
+
+    public List<SalesOrder> getSalesOrderList() {
+        return salesOrderList;
+    }
+
+    public void setSalesOrderList(List<SalesOrder> salesOrderList) {
+        this.salesOrderList = salesOrderList;
     }
 }

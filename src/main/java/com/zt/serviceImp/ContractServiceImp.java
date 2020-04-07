@@ -7,11 +7,13 @@ import com.zt.dao.*;
 import com.zt.model.*;
 import com.zt.po.*;
 import com.zt.service.ContractService;
+import com.zt.vo.ContractVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -39,6 +41,55 @@ public class ContractServiceImp implements ContractService {
     ContractCodeDao contractCodeDao;
     @Autowired
     ContractScheduleDao contractScheduleDao;
+
+    @Override
+    public ResultPage<ContractVO> listByPage(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd, String signDateStart, String signDateEnd, Integer status, int page, int size) {
+        ResultPage<ContractVO> ro = new ResultPage<>();
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Map<String, String> stringStringMap = Utils.updateTime(createDateStart, createDateEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,signDateStart, signDateEnd);
+        createDateStart = stringStringMap.get("0");
+        createDateEnd = stringStringMap.get("1");
+        startDateStart = stringStringMap.get("2");
+        startDateEnd = stringStringMap.get("3");
+        endDateStart = stringStringMap.get("4");
+        endDateEnd = stringStringMap.get("5");
+        signDateStart = stringStringMap.get("6");
+        signDateEnd = stringStringMap.get("7");
+
+        Page<Contract> pages = contractDao.findSearch(contractName, clientName, empName, createDateStart, createDateEnd, startDateStart, startDateEnd, endDateStart, endDateEnd,signDateStart,signDateEnd, status, pageable);
+        List<Contract> contractList = pages.getContent();
+        if (contractList != null) {
+            ro.setTotal(pages.getTotalElements());
+            ro.setTotalPages(pages.getTotalPages());
+            //遍历合同集合并重新组装ContractVO返回
+            List<ContractVO> contractVOList = convert(contractList);
+            ro.setData(contractVOList);
+            ro.setSuccess(true);
+        } else {
+            ro.setSuccess(false);
+            throw new BusinessRuntimeException(ResultCode.UNKNOWN_ERROR);
+        }
+        return ro;
+    }
+
+    private List<ContractVO> convert(List<Contract> contractList) {
+        List<ContractVO> result = new ArrayList<>();
+        for (Contract contract : contractList) {
+            ContractVO vo = new ContractVO();
+            vo.setId(contract.getId());
+            vo.setSequence(contract.getSequence());
+            vo.setContractNumber(contract.getContractNumber());
+            vo.setQualityDepositStatus(contract.getQualityDepositStatus());
+            vo.setQualityDeposit(contract.getQualityDeposit());
+            vo.setTotalMoney(contract.getTotalMoney());
+            vo.setSignContractDate(contract.getSignContractDate());
+            vo.setClientName(contract.getCliente().getName());
+            vo.setContractScheduleList(contractScheduleDao.findByContractId(contract.getId()));
+            vo.setOrderList(contract.getSalesOrderList());
+            result.add(vo);
+        }
+        return result;
+    }
 
 
     /**
@@ -90,6 +141,7 @@ public class ContractServiceImp implements ContractService {
     新增方法
      */
     @Override
+    @Transactional
     public ResultObject<Contract> add(ContractModel contractModel) {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();
@@ -146,6 +198,7 @@ public class ContractServiceImp implements ContractService {
     修改方法
      */
     @Override
+    @Transactional
     public ResultObject<Contract> update(ContractModel contractModel) {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();

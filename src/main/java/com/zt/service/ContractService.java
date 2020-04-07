@@ -4,6 +4,7 @@ import com.zt.model.ContractModel;
 import com.zt.model.ResultObject;
 import com.zt.model.ResultPage;
 import com.zt.po.Contract;
+import com.zt.vo.ContractVO;
 
 public interface ContractService {
 
@@ -22,4 +23,6 @@ public interface ContractService {
     ResultObject<Object> getBaseData();
 
     ResultObject<Object> findByClientId(long clientId);
+
+    ResultPage<ContractVO> listByPage(String contractName, String clientName, String empName, String createDateStart, String createDateEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd, String signDateStart, String signDateEnd, Integer status, int page, int size);
 }
