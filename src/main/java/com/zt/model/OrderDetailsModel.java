@@ -42,11 +42,20 @@ public class OrderDetailsModel {
     public OrderDetailsModel j2m(JSONObject object){
         OrderDetailsModel orderDetailsModel = new OrderDetailsModel();
         String idStr = String.valueOf(object.get("id"));
-        String productNo = String.valueOf(object.get("productNo"));
+        String productNo;
+        if(null!=object.get("productNo")){
+            productNo="";
+        }else {
+        productNo= String.valueOf(object.get("productNo"));
+        }
         if(!idStr.equals("null")&&!idStr.equals("0")){
             orderDetailsModel.setId(Long.parseLong(idStr));
         }
+        if(productNo!=null&&productNo.equals("null")){
+            orderDetailsModel.setProductNo(0);
+        }else{
         orderDetailsModel.setProductNo(Double.parseDouble(productNo));
+        }
         if(object.get("productDetailsId")!=null){
          String  productId = String.valueOf(object.get("productDetailsId")) ;
             orderDetailsModel.setProductDetailsId(Long.parseLong(productId));

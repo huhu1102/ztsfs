@@ -217,7 +217,7 @@ public interface ProductionPlanDetailsDao extends JpaRepository<ProductionPlanDe
                                           @Param("clientName")String clientName,
                                           @Param("status")Integer status);
     @Modifying
-    @Query(value = "UPDATE zt_productionplandetails SET contractNo = 100, actualQuantity = (CASE WHEN actualQuantity - ?2 > 0 THEN 3 ELSE 2 END) WHERE id = ?1;",nativeQuery = true)
+    @Query(value = "UPDATE zt_productionplandetails SET contractNo = ?2+contractNo, actualQuantity = (CASE WHEN actualQuantity - ?2 > 0 THEN 3 ELSE 2 END) WHERE id = ?1",nativeQuery = true)
     int updateContractStatus(long productdetailId, Double quntity);
 
 

@@ -155,6 +155,9 @@ public class SalesOrderServiceImp implements SalesOrderService {
                 for (OrderDetailsModel mode : detailModellist) {
                     long productdetailId= mode.getProductDetailsId();
                     Double   quntity=mode.getProductNo();
+                    if(null==quntity){
+                        quntity=0d;
+                    }
                     result=  productionPlanDetailsDao.updateContractStatus(productdetailId,quntity);
                     if(result<0){
                         flag=true;

@@ -141,8 +141,8 @@ public class ShippingBillServiceImp implements ShippingBillService {
         shippingBill.setShipingStatus(1);
         shippingBill = shippingBillDao.saveAndFlush(shippingBill);
 //		修改销售计划中发货量
-        if (null != shippingBill&& shippingBillDao.changeMidTable(shippingBill.getId(),shippingBill.getShippingRequestDetailsId())>0
 
+        if (null != shippingBill&& shippingBillDao.changeMidTable(shippingBill.getId(),shippingBill.getShippingRequestDetailsId())>0
                 && shippingBill.getPlanNumber() != 0) {
             if (changSaleMsg(shippingBill,0F) > 0&&changProductMsg(shippingBill, 0F)>0) {
                 ro.setSuccess(true);

@@ -22,7 +22,7 @@ public class Contract extends BasePo{
 
     //合同名称
     @Column(columnDefinition ="varchar(255)  COMMENT '合同名称.'" )
-    private String contractName;
+    private String contractName ;
 
     //合同编号
     @Column(columnDefinition ="varchar(255)  COMMENT '合同编号.'" )
