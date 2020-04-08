@@ -147,7 +147,8 @@ public class ContractServiceImp implements ContractService {
         ContractModel mo = new ContractModel();
         Contract contract = mo.v2p(contractModel);
         contract.setEnabled(true);
-        contract.setSequence(createSequence());
+        String maxSequence = contractDao.maxSequence();
+        contract.setSequence(Utils.newPlanNo(maxSequence,"C"));
         contract.setCreateDate(new Date());
         contract.setCliente(clientDao.findById(contract.getCliId()));
         Employee employee = employeeDao.findById(contract.getEmpId());
@@ -288,18 +289,18 @@ public class ContractServiceImp implements ContractService {
     }
 
     //自动生成合同序号
-    public String createSequence(){
-        String num = "C00001";
-        //查询当前合同表中最大的序号
-        String maxSequence = contractDao.maxSequence();
-        StringBuilder sb = new StringBuilder();
-        if(maxSequence!=null){
-            String sub = maxSequence.substring(1);
-            sb.append("C").append(String.format("%05d",Integer.parseInt(sub)+1));
-            num = sb.toString();
-        }
-        return num;
-    }
+//    public String createSequence(){
+//        String num = "C00001";
+//        //查询当前合同表中最大的序号
+//        String maxSequence = contractDao.maxSequence();
+//        StringBuilder sb = new StringBuilder();
+//        if(maxSequence!=null){
+//            String sub = maxSequence.substring(1);
+//            sb.append("C").append(String.format("%05d",Integer.parseInt(sub)+1));
+//            num = sb.toString();
+//        }
+//        return num;
+//    }
 
     @Override
     public ResultObject<Object> findByClientId(long clientId) {
