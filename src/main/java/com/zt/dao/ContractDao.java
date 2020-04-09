@@ -46,7 +46,6 @@ public interface ContractDao extends JpaRepository<Contract,Long> {
                               @Param("startDateEnd")String startDateEnd,
                               @Param("endDateStart")String endDateStart,
                               @Param("endDateEnd")String endDateEnd,
-
                               @Param("signDateStart")String signDateStart,
                               @Param("signDateEnd")String signDateEnd,
                               @Param("contractStatus")Integer status,

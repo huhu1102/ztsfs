@@ -344,7 +344,6 @@ public class ProductManageDetailsServiceImp implements ProductManageDetailsServi
 
 
     //修改半成品库数量 和 半成品库 出入库记录
-
     private ResultObject<ProductManageDetails> updateMiddleProductQuantity(ResultObject<ProductManageDetails> ro,long productManageDetailsId, Product product, float quan, String notes, Employee employee,String type) {
         List<MidMaterial> midMaterialList = product.getMidMaterials();
         if (midMaterialList.size() > 0) {

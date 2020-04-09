@@ -83,7 +83,7 @@ public interface MiddleProductDao extends JpaRepository<MiddleProduct,Long>{
 	修改库存数量
 	 */
     @Modifying
-	@Query("update MiddleProduct m set m.productNo=m.productNo+:productNo where m.id=:midId")
+	@Query("update MiddleProduct m set m.productNo=m.productNo-:productNo where m.id=:midId")
     Integer update(@Param("productNo") float productNo,@Param("midId") long id);
 
 }
