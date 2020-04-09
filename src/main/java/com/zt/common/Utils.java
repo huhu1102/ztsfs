@@ -157,7 +157,7 @@ public class Utils {
 	public static Map<String,String>  updateTime(String ...days){
 		Map<String,String>map=new HashMap<>();
 		for (int i = 0; i < days.length; i++) {
-			 if(!(days[i].equals(""))){
+			 if(days[i]!=null&&!(days[i].equals(""))){
 				 map.put(i+"",Utils.parseTimeZone(days[i]));
 			 }
 		}

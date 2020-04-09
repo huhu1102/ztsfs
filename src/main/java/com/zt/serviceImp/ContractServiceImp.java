@@ -273,7 +273,8 @@ public class ContractServiceImp implements ContractService {
         List<SalesOrder> orderList = salesOrderDao.findAllOders();
         List<ProductionPlanDetails> prePlans = productionPlanDetailsDao.findByCon("","","","","",3);
         Set<Client> clients = clientDao.findClient();
-
+        String maxSequence = contractDao.maxSequence();
+        maxSequence= Utils.newPlanNo(maxSequence,"C");
         if (employeeList==null) {
             ro.setSuccess(false);
             throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
@@ -282,6 +283,7 @@ public class ContractServiceImp implements ContractService {
             map.put("clients", clients);
             map.put("orderList", orderList);
             map.put("prePlans", prePlans);
+            map.put("serialNo", maxSequence);
             ro.setRoot(map);
             ro.setSuccess(true);
         }
