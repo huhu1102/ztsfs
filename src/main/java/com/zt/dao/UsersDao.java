@@ -61,7 +61,7 @@ public interface UsersDao extends JpaRepository<Users, Long> {
     @Modifying
     @Transactional
     @Query("Update Users s set s.enabled=false where s.id=?1 ")
-	boolean updateUser(long id);
+	int updateUser(long id);
 
 	/**
 	 * @param empId
