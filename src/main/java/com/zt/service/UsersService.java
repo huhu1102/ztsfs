@@ -17,12 +17,13 @@ import com.zt.vo.UsersModel;
 public interface UsersService {
 	ResultObject<Users> Login( String username, String password)throws BusinessRuntimeException;
 
+
+	 ResultObject<Users> getMenu()throws BusinessRuntimeException;
 	/**
-	 * @param userName
+	 * @param username
 	 * @return
 	 */
-	public ResultObject<Users> getMenu()throws BusinessRuntimeException;
-	public Users loadUserByUsername(String username)throws Exception;
+	 Users loadUserByUsername(String username)throws Exception;
 
 	/**
 	 * @param userId 

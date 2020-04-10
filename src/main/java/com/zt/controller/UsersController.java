@@ -45,16 +45,7 @@ public class UsersController {
 	    return userService.Login(username, password);
 	  }
 
-	/**
-	 * @param
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/getMenu",method=RequestMethod.GET)
-	  public ResultObject<Users> getMenu(){
-		logger.info("请求登录");
-	    return userService.getMenu();
-	  }
+
 	/*
 	 * 分页模糊条件查询
 	 */
