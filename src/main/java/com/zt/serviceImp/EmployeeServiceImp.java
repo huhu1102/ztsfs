@@ -233,7 +233,7 @@ public class EmployeeServiceImp implements EmployeeService {
             employee.setDepartmentName("");
             employee.setDepartmentIds("");
         }
-        if (!(null == postIds || ("").equals(deptIds.trim()))) {
+        if (!(null == postIds || ("").equals(postIds.trim()))) {
             //添加新的关系
             List<Long> posList = strToArr(postIds);
             List<Position> poList = postDao.findbyIds(posList);
