@@ -96,6 +96,7 @@ public class UsersServiceImp implements UsersService {
 		 return ro;
 	}
 	@Override
+	@Cacheable(key ="#root.methodName")
 	public ResultObject<Users> getMenu() throws BusinessRuntimeException{
 	ResultObject<Users> ro=new ResultObject<Users>();		
 		Map<String, Object> map=new HashMap<String,Object>();
