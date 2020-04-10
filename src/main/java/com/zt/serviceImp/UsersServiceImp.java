@@ -292,8 +292,8 @@ public class UsersServiceImp implements UsersService {
 	@Transactional
 	public ResultObject<Users> delete(long id) throws BusinessRuntimeException {
 		ResultObject<Users> ro=new ResultObject<Users>();
-		boolean u= userdao.updateUser(id);
-		if (u) {
+		int u= userdao.updateUser(id);
+		if (u>0) {
 //			//查找对应的员工信息，也删除
 //			long empId = userdao.findById(id).getEmpId();
 //			if (empId>0) {
