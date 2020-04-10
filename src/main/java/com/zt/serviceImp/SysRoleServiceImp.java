@@ -79,7 +79,7 @@ public class SysRoleServiceImp  implements SysRoleService{
 	@Override
 	public ResultObject<SysRole> delete(Integer id) throws BusinessRuntimeException {
 		ResultObject<SysRole> ro=new ResultObject<SysRole>();
-		SysRole role= sysRoleDao.findById(id);
+		SysRole role= sysRoleDao.findByRoleId(id);
 		if (role!=null&&role.getId()!=0) {
 			role.setEnabled(false);
 			role=sysRoleDao.saveAndFlush(role);

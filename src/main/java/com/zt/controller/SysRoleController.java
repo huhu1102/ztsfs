@@ -1,19 +1,16 @@
 package com.zt.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.zt.model.ResultObject;
 import com.zt.model.ResultPage;
 import com.zt.po.Menu;
 import com.zt.po.SysRole;
 import com.zt.service.SysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author wl
@@ -40,12 +37,12 @@ public class SysRoleController {
 	  public ResultObject<SysRole> saves(SysRole role){
 	     return roleService.save(role);
 	  }
-	
+
 	/*
 	 * 删除
 	 */
-	@RequestMapping(value="/delete",method=RequestMethod.GET)
-	  public ResultObject<SysRole> deletEmp(Integer id){
+	@RequestMapping(value="/delete",method=RequestMethod.POST)
+	  public ResultObject<SysRole> delete(Integer id){
 	     return roleService.delete(id);
 	  }
 
@@ -68,5 +65,5 @@ public class SysRoleController {
 	public ResultObject<Menu> updateMenuRole(Integer rid ,Long[] mids){
 		return roleService.updateMenuRole(rid,mids);
 	}
-	
+
 }

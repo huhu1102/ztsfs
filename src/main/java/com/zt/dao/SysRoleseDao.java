@@ -1,7 +1,7 @@
-/**  
-* 
-*/  
- 
+/**
+*
+*/
+
 package com.zt.dao;
 
 import java.util.List;
@@ -18,12 +18,10 @@ import com.zt.po.SysRole;
 
 /**
  * @author whl
- * @date 2019年4月12日 
+ * @date 2019年4月12日
  */
 @RepositoryRestResource(collectionResourceRel = "sysroles", path="sysroles")
 public interface SysRoleseDao  extends  JpaRepository<SysRole, Long>{
-	SysRole findById(Integer id);
-
 	/**
 	 * @param
 	 * @param
