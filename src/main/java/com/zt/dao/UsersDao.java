@@ -36,7 +36,9 @@ public interface UsersDao extends JpaRepository<Users, Long> {
 	List<Users>  getAllUsersExcept(@Param("userId") long userId);
 
 
-    @Query(value = "SELECT u.id  FROM zt_users u LEFT JOIN zt_employee e ON u.empId = e.id LEFT JOIN zt_department d ON e.departmentIds = d.id LEFT JOIN zt_position p ON e.positionIds = p.id WHERE  d.deNumber = :deNumber and (p.posNumber =:posNumber OR p.posNumber =:pos )",nativeQuery = true)
+    @Query(value = "SELECT u.id  FROM zt_users u LEFT JOIN zt_employee e ON u.empId = e.id " +
+			"LEFT JOIN zt_department d ON e.departmentIds = d.id LEFT JOIN zt_position p ON e.positionIds = p.id " +
+			"WHERE  d.deNumber = :deNumber and (p.posNumber =:posNumber OR p.posNumber =:pos )",nativeQuery = true)
 	Set<Long> findUserIdByDepPro(@Param("deNumber")String depNumber, @Param("posNumber")int posNumber, @Param("pos")int pos);
 
 
