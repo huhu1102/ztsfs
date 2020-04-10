@@ -120,8 +120,8 @@ public class FinishedProductServiceImp implements FinishedProductService{
 		Map<String, Object> map=new HashMap<String, Object>();
 //		List<Department> departmentlist=  departDao.findAllDep();
 //		List<Position> postlist = postDao.findallpost();
-		 Set<Client> clients= clientDao.findClient();
-		     Set<Product> productList=  productDao.findAlldatas();
+		 Set<Client> clients= clientDao.findClientUp();
+		 Set<Product> productList=  productDao.findAlldatas();
 		if (productList!=null) {
 			map.put("clients", clients);
 			map.put("pruducts", productList);

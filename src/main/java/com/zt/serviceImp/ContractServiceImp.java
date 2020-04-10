@@ -272,7 +272,7 @@ public class ContractServiceImp implements ContractService {
         List<Employee> employeeList = employeeDao.findAll();
         List<SalesOrder> orderList = salesOrderDao.findAllOders();
         List<ProductionPlanDetails> prePlans = productionPlanDetailsDao.findByCon("","","","","",3);
-        Set<Client> clients = clientDao.findClient();
+        Set<Client> clients = clientDao.findClientDown();
         String maxSequence = contractDao.maxSequence();
         maxSequence= Utils.newPlanNo(maxSequence,"C");
         if (employeeList==null) {

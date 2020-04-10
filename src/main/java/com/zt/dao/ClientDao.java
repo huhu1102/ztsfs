@@ -52,7 +52,9 @@ public interface ClientDao extends JpaRepository<Client, Long>{
 //    @Query("select c.name,c.id,c.parentClientId,c.parentName,c.address,c.phone,c.abbreviation from Client c where c.enabled = true and c.status = 'down' and c.parentClientId!=0 and c.id!=c.parentClientId")
 //    @Query("from Client c where c.enabled = true and c.status = 'down' and (c.parentClientId=0 or c.id=c.parentClientId)")
     @Query("from Client c where c.enabled = true and c.status = 'down'")
-    Set<Client>  findClient();
+    Set<Client>  findClientDown();
+    @Query("from Client c where c.enabled = true and c.status = 'up'")
+    Set<Client>  findClientUp();
 
     /**
      *  客户更新方法
