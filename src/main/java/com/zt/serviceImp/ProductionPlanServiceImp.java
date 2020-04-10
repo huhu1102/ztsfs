@@ -191,7 +191,7 @@ public class ProductionPlanServiceImp implements ProductionPlanService {
         ResultObject<ProductionPlan> ro = new ResultObject<>();
         Map<String, Object> root = new HashMap<>();
         Set<Object[]> products = productDao.findProduct();
-        Set<Client> clients = clientDao.findClientDown();
+        Set<Client> clients = clientDao.findClientUp();
         Set<Employee> emps= empDao.findAllEmps();
         if (products != null && clients != null) {
             root.put("clients", clients);
