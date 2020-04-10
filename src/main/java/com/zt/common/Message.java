@@ -42,13 +42,11 @@ public class Message {
         //获取职位编号
         List<Long> ids=new ArrayList<>();
         for (String num:depNubmers) {
-
-
-        Set<Long> usersIds = usersDao.findUserIdByDepPro(num, DepmentAndPosCode.DIRECTOR,DepmentAndPosCode.VICE_DIRECTOR);
-        Set<Long> usersIdAdminstration = usersDao.findUserIdByDepPro(DepmentAndPosCode.ADMINISTRATION_DEPARTMENT, DepmentAndPosCode.DIRECTOR,DepmentAndPosCode.VICE_DIRECTOR);
-        usersIds.addAll(usersIdAdminstration);
-        //获取userId
-         ids = new ArrayList<>(usersIds);
+            Set<Long> usersIds = usersDao.findUserIdByDepPro(num, DepmentAndPosCode.DIRECTOR,DepmentAndPosCode.VICE_DIRECTOR);
+            Set<Long> usersIdAdminstration = usersDao.findUserIdByDepPro(DepmentAndPosCode.ADMINISTRATION_DEPARTMENT, DepmentAndPosCode.DIRECTOR,DepmentAndPosCode.VICE_DIRECTOR);
+            usersIds.addAll(usersIdAdminstration);
+            //获取userId
+             ids = new ArrayList<>(usersIds);
         }
         return ids;
     }

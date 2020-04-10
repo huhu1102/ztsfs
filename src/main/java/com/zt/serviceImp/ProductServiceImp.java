@@ -230,6 +230,7 @@ public class ProductServiceImp implements ProductService {
         MidMaterialModel midModel = new MidMaterialModel();
         if (productModel.getId() > 0) {
             Product pro = productDao.findById(productModel.getId());
+            List<ProductPreProcess> preprosess = pro.getPreprosess();
             List<MidMaterial> midMaterialList = pro.getMidMaterials();
             pro = mo.v2p(productModel);
             List<Specification> specList=getSpecString(productModel.getSpecification());
@@ -249,7 +250,7 @@ public class ProductServiceImp implements ProductService {
                     colorsb.append(",").append(c.getName());
                 }
             }
-             String specStr=  specsb.toString().replaceFirst("/","");
+            String specStr=  specsb.toString().replaceFirst("/","");
             pro.setSpecName(specStr);
             pro.setSpecs(specList);
             String colorStr=colorsb.toString().replaceFirst(",","");
@@ -319,6 +320,8 @@ public class ProductServiceImp implements ProductService {
             }
             }
             pro.setMidMaterials(midMaterialList);
+            //获取到老的工序
+            pro.setPreprosess(preprosess);
             pro = productDao.saveAndFlush(pro);
             if(pro!=null) {
             	ro.setSuccess(true);
@@ -430,18 +433,18 @@ public class ProductServiceImp implements ProductService {
             processList.removeAll(processList);
             product = productDao.saveAndFlush(product);
         }
-           if (productPreProcessList.size()>0){
+        if (productPreProcessList.size()>0){
             product.setPreprosess(productPreProcessList);
-           }
-            product = productDao.saveAndFlush(product);
-            if(product!=null){
-                ro.setSuccess(true);
-                ro.setMsg("添加成功");
-            }else{
-                ro.setSuccess(false);
-                ro.setMsg("添加失败");
-                throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
-            }
+        }
+        product = productDao.saveAndFlush(product);
+        if(product!=null){
+            ro.setSuccess(true);
+            ro.setMsg("添加成功");
+        }else{
+            ro.setSuccess(false);
+            ro.setMsg("添加失败");
+            throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
+        }
 
         return ro;
     }
