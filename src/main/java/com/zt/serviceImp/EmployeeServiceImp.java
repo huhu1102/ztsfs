@@ -218,10 +218,11 @@ public class EmployeeServiceImp implements EmployeeService {
     @Transactional
     public ResultObject<Employee> updateData(String deptIds, String postIds, Employee employee) throws BusinessRuntimeException {
         ResultObject<Employee> ro = new ResultObject<>();
-        Employee oldEmp = employeeDao.findById(employee.getId());
+        //移除部门关系
+        employeeDao.deleteDepart(employee.getId());
+        //移除职位关系
+        employeeDao.deletePost(employee.getId());
         if (!(null == deptIds || ("").equals(deptIds.trim()))) {
-            //移除之前的关系
-            int asd = employeeDao.deleteDepart(oldEmp.getId());
             //添加新的关系；
             List<Long> deptList = strToArr(deptIds);
             List<Department> deptsList = departDao.findAllbyIds(deptList);
@@ -230,8 +231,6 @@ public class EmployeeServiceImp implements EmployeeService {
             employee.setDepartmentIds(deptIds);
         }
         if (!(null == postIds || ("").equals(deptIds.trim()))) {
-            //移除之前的关系
-            int asd = employeeDao.deletePost(oldEmp.getId());
             //添加新的关系
             List<Long> posList = strToArr(postIds);
             List<Position> poList = postDao.findbyIds(posList);
@@ -251,9 +250,7 @@ public class EmployeeServiceImp implements EmployeeService {
             ro.setMsg("操作失败");
             throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
         }
-
         return ro;
-
     }
 
     /*
