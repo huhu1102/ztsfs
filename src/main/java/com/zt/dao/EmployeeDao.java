@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
 * @author wl
-* @version 2019年4月13日 
+* @version 2019年4月13日
 * JPA库的连接(员工信息)
 */
 @RepositoryRestResource(collectionResourceRel = "employee", path="employee")
@@ -23,7 +23,7 @@ public interface EmployeeDao extends JpaRepository<Employee, Long>{
 	/*
 	 * 自定义分页查询
 	 */
-	@Query("from Employee u where u.name=:name")  
+	@Query("from Employee u where u.name=:name")
     Employee findEmployee(@Param("name") String name);
 
 
@@ -49,15 +49,15 @@ public interface EmployeeDao extends JpaRepository<Employee, Long>{
 	 */
     @Query("select max(u.id) from Employee u")
 	Long findCurrentNo();
-    
+
     Employee findById(long id);
 	@Query("from Employee u where u.enabled=true")
 	Set<Employee> findAllEmps();
 	@Modifying
-	@Query(value ="DELETE  FROM  zt_emp_dept d WHERE  d.e_id=?1",nativeQuery = true)
+	@Query(value ="DELETE  FROM  zt_emp_dept WHERE e_id=?1",nativeQuery = true)
     int deleteDepart(long empId);
 	@Modifying
-	@Query(value = "DELETE  FROM  zt_emp_pos d WHERE  d.e_id=?1",nativeQuery = true)
+	@Query(value = "DELETE  FROM  zt_emp_pos WHERE e_id=?1",nativeQuery = true)
 	int deletePost(long id);
 
 	@Modifying
