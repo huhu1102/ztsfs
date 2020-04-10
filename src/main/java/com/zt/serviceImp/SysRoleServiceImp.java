@@ -1,7 +1,7 @@
-/**  
-* 
-*/  
- 
+/**
+*
+*/
+
 package com.zt.serviceImp;
 
 
@@ -26,10 +26,11 @@ import com.zt.po.Product;
 import com.zt.po.ReturnVisit;
 import com.zt.po.SysRole;
 import com.zt.service.SysRoleService;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author whl
- * @date 2019年5月20日 
+ * @date 2019年5月20日
  */
 @Service(value="sysrole")
 @Transactional
@@ -68,11 +69,11 @@ public class SysRoleServiceImp  implements SysRoleService{
 			   ro.setSuccess(true);
 			   ro.setMsg("操作成功");
 		   }else {
-			   ro.setSuccess(false);		
+			   ro.setSuccess(false);
 			   ro.setMsg("操作失败");
 			   throw new BusinessRuntimeException(ResultCode.OPER_FAILED);
 		   }
-		
+
 		return ro;
 	}
 	@Override
@@ -85,9 +86,9 @@ public class SysRoleServiceImp  implements SysRoleService{
 			if (role!=null) {
 				ro.setSuccess(true);
 				ro.setMsg("操作成功！");
-				
-				
-				
+
+
+
 			}else {
 				ro.setSuccess(false);
 				ro.setMsg("操作失败");
@@ -96,8 +97,8 @@ public class SysRoleServiceImp  implements SysRoleService{
 			ro.setSuccess(false);
 			throw new BusinessRuntimeException(ResultCode.UNKNOWN_ERROR);
 		}
-		
-		
+
+
 		return ro;
 	}
 
@@ -133,7 +134,10 @@ public class SysRoleServiceImp  implements SysRoleService{
 	public ResultObject<Menu> updateMenuRole(Integer rid, Long[] mids) {
 		ResultObject ro=new ResultObject();
 		List<Long>  arrayList = new ArrayList<Long>(Arrays.asList(mids));
-		     menuDao.deleteMids(rid);
+		//判断参数是否空数组，如果是空数组给集合中添加一个0，以解决HQL IN方法报错。
+		if(CollectionUtils.isEmpty(arrayList))
+			arrayList.add(0l);
+		menuDao.deleteMids(rid);
 
         SysRole sysRole=sysRoleDao.findByRoleId(rid);
         List<Menu> menuList=menuDao.findAllByMiId(arrayList);
