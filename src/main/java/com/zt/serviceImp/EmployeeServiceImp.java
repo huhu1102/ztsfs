@@ -229,6 +229,9 @@ public class EmployeeServiceImp implements EmployeeService {
             employee.setDept(deptsList);
             employee.setDepartmentName(arrToStr(deptsList));
             employee.setDepartmentIds(deptIds);
+        }else{
+            employee.setDepartmentName("");
+            employee.setDepartmentIds("");
         }
         if (!(null == postIds || ("").equals(deptIds.trim()))) {
             //添加新的关系
@@ -237,6 +240,9 @@ public class EmployeeServiceImp implements EmployeeService {
             employee.setPost(poList);
             employee.setPositionName(arrToPosStr(poList));
             employee.setPositionIds(postIds);
+        }else{
+            employee.setPositionName("");
+            employee.setPositionIds("");
         }
 		employee.setEnabled(true);
 		Employee emp = employeeDao.saveAndFlush(employee);
