@@ -111,7 +111,10 @@ public class Contract extends BasePo{
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
-    //关联合同
+    //关联合同详情
+    @OneToMany(mappedBy = "contract",cascade = CascadeType.ALL)
+    private List<ContractDetails> contractDetailsList;
+    //关联订单
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="zt_salesorder_contract",joinColumns={@JoinColumn(name="c_id")}
             ,inverseJoinColumns={@JoinColumn(name="s_id")})
@@ -324,6 +327,14 @@ public class Contract extends BasePo{
 
     public List<SalesOrder> getSalesOrderList() {
         return salesOrderList;
+    }
+
+    public List<ContractDetails> getContractDetailsList() {
+        return contractDetailsList;
+    }
+
+    public void setContractDetailsList(List<ContractDetails> contractDetailsList) {
+        this.contractDetailsList = contractDetailsList;
     }
 
     public void setSalesOrderList(List<SalesOrder> salesOrderList) {

@@ -145,6 +145,7 @@ public class ContractServiceImp implements ContractService {
     public ResultObject<Contract> add(ContractModel contractModel) {
         ResultObject<Contract> ro = new ResultObject<>();
         ContractModel mo = new ContractModel();
+        List<SalesOrder> salesOrderList = new ArrayList<>();
         Contract contract = mo.v2p(contractModel);
         contract.setEnabled(true);
         String maxSequence = contractDao.maxSequence();
@@ -153,6 +154,17 @@ public class ContractServiceImp implements ContractService {
         contract.setCliente(clientDao.findById(contract.getCliId()));
         Employee employee = employeeDao.findById(contract.getEmpId());
         contract.setEmployee(employee);
+        //获取订单,并将订单和合同关联
+        long orderId = contractModel.getOrderId();
+        SalesOrder salesOrder = salesOrderDao.findById(orderId);
+        salesOrderList.add(salesOrder);
+        contract.setSalesOrderList(salesOrderList);
+        //获取订单详情,将订单详情数据添加到合同详情
+        List<SalesOrderDetails> salesOrderDetailsList = salesOrder.getSalesOrderDetails();
+        List<ContractDetails> contractDetailsList = save(salesOrderDetailsList, contract);
+        contract.setContractDetailsList(contractDetailsList);
+
+
         contract = contractDao.saveAndFlush(contract);
         if(null == contract){
             ro.setSuccess(false);
@@ -327,4 +339,30 @@ public class ContractServiceImp implements ContractService {
         }
         return ro;
     }
+
+    /**
+     *
+     * @param salesOrderDetailsList 订单详情
+     * @param contract 合同对象
+     * @return
+     */
+    private List<ContractDetails> save(List<SalesOrderDetails> salesOrderDetailsList,Contract contract){
+        List<ContractDetails> contractDetailsList = new ArrayList<>();
+        for (int i = 0; i < salesOrderDetailsList.size(); i++) {
+            SalesOrderDetails salesOrderDetails = salesOrderDetailsList.get(i);
+            ContractDetails contractDetails = new ContractDetails();
+            contractDetails.setResourcesNumber(salesOrderDetails.getResourcesNumber());
+            contractDetails.setProductNo(salesOrderDetails.getProductNo());
+            contractDetails.setUnitPrice(salesOrderDetails.getUnitPrice());
+            contractDetails.setTotalMoney(salesOrderDetails.getTotalMoney());
+            contractDetails.setEndDate(salesOrderDetails.getEndDate());
+            contractDetails.setAddress(salesOrderDetails.getAddress());
+            contractDetails.setEnabled(true);
+            contractDetails.setCreateDate(new Date());
+            contractDetails.setContract(contract);
+            contractDetailsList.add(contractDetails);
+        }
+        return contractDetailsList;
+    }
+
 }

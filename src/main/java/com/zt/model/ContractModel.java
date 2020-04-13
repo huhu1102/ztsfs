@@ -35,6 +35,11 @@ public class ContractModel extends BasePo {
      */
     private String imageUrl;
 
+    /**
+     * 订单Id
+     */
+    private Long orderId;
+
     //前台展示使用；
     private String clientArr;
     //质保金 e.g 5%
@@ -267,11 +272,36 @@ public class ContractModel extends BasePo {
         this.contractCodeName = contractCodeName;
     }
 
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getContractDetails() {
+        return contractDetails;
+    }
+
+    public void setContractDetails(String contractDetails) {
+        this.contractDetails = contractDetails;
+    }
+
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
+    }
+
     public Contract v2p(ContractModel mo){
         Contract c = new Contract();
         if(mo.getContractId()!=0){
             c.setId(mo.getContractId());
         }
+
         c.setContractName(mo.getContractName());
         c.setContractNumber(mo.getContractNumber());
         c.setCliId(mo.getCliId());
